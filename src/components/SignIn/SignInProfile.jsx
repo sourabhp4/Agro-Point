@@ -80,7 +80,8 @@ const SignInProfile = forwardRef ((props, ref) => {
       ) : (
         <> 
             <button
-              className="md:block font-medium text-gray-900 dark:text-gray-100 bg-yellow-600 p-2 rounded hover:scale-110 transition-all"
+              className="font-medium text-gray-900 dark:text-gray-100 bg-green-600 p-2 rounded 
+                hover:bg-primary-100 hover:scale-110 transition-all hidden md:block"
               onClick={() => setIsModalOpen(true)}
             >
               Sign In

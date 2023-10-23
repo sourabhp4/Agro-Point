@@ -37,10 +37,10 @@ export default function RootLayout({ children }) {
     <body className="bg-white text-black antialiased dark:bg-gray-950 dark:text-white" suppressHydrationWarning={true}>
       <Provider>
         <ThemeProviders>
-          <section className='mx-6'>
+          <section className=''>
             <div className="h-screen font-sans">
               <Header />
-              <main className="mb-auto">{ children }</main>
+              <main className="mt-24">{ children }</main>
               <Footer />
             </div>
           </section>

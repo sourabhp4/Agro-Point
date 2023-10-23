@@ -5,6 +5,7 @@ import ThemeSwitch from './ThemeSwitch'
 import SignInProfile from './SignIn/SignInProfile'
 
 import Image from 'next/image'
+import SearchBar from './SearchBar'
 
 const Header = () => {
 
@@ -14,25 +15,22 @@ const Header = () => {
       href: '/about'
     },
     {
-      title: 'Blogs',
-      href: '/blogs'
-    },
-    {
-      title: 'Events',
-      href: '/events'
-    },
+      title: 'Products',
+      href: '/products'
+    }
   ]
 
   return (
-      <header className="flex items-center justify-between py-4">
+      <header className="z-30 fixed top-0 w-full flex items-center justify-between py-4 px-4 backdrop-blur-md">
         <div>
           <Link href="/" >
             <div className="flex items-center justify-between">
               <div className="mr-4">
-                <div className="gap-2 w-28 h-28 relative mx-1 sm:mx-3 ">
+                <div className="gap-2 w-12 h-12 relative mx-1 sm:mx-2 ">
                   <Image
                     alt='Agro Logo'
-                    src='/images/agro_logo.png'
+                    src='/images/agro_logo1.png'
+                    priority={false}
                     fill
                     sizes="(max-width: 100px) 100vw, (max-width: 120px) 50vw, 33vw"
                   />
@@ -45,15 +43,16 @@ const Header = () => {
           </Link>
         </div>
         <div className="flex items-center leading-5 space-x-4 sm:space-x-6">
-        { links.map( (link) => 
-            <Link
-              key={link.title}
-              href={link.href}
-              className="hidden md:block font-medium text-gray-900 dark:text-gray-100 hover:bg-yellow-600 p-2 rounded"
-            >
-              {link.title}
-            </Link>
-        )}
+          <SearchBar />
+          { links.map( (link) => 
+              <Link
+                key={link.title}
+                href={link.href}
+                className="hidden md:block font-medium text-gray-900 dark:text-gray-100 hover:bg-green-400 p-2 rounded"
+              >
+                {link.title}
+              </Link>
+          )}
           <SignInProfile />
           <ThemeSwitch />
           <MobileNav />

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import SignInButton from './SignIn/SignInButton'
 
 const MobileNav = () => {
   const [navShow, setNavShow] = useState(false)
@@ -16,12 +17,8 @@ const MobileNav = () => {
       href: '/about' 
     },
     {
-      title: 'Blogs',
-      href: '/blogs' 
-    },
-    {
-      title: 'Events',
-      href: '/events' 
+      title: 'Products',
+      href: '/products' 
     },
   ]
 
@@ -85,6 +82,9 @@ const MobileNav = () => {
                 </Link>
               </div>
             ))}
+            <div className="px-12 py-4 text-2xl font-bold tracking-widest">
+              <SignInButton buttonText={'SignIn'} />
+            </div>
           </nav>
         </div>
     </>

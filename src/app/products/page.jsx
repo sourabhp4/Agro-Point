@@ -79,7 +79,7 @@ const Blogs = async () => {
       <div>
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-center text-yellow-900">
-            BLOGS
+            PRODUCTS TO VIEW
           </h1>
         </div>
         {session ? 
@@ -127,7 +127,7 @@ const Blogs = async () => {
             })}
           </ul>
           :
-          <div className='h-[35vh] flex flex-col gap-6 rounded-3xl p-8 items-center bg-gradient-to-t from-gray-700 dark:to-black light:to-white'>
+          <div className='h-[35vh] flex flex-col gap-6 rounded-3xl p-8 items-center bg-gradient-to-t from-gray-300 dark:to-black light:to-white'>
             <BsFillLockFill />
             <SignInButton buttonText={'Sign In to View'} />
           </div>

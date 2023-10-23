@@ -18,7 +18,8 @@ const SignInButton =  (props) => {
           <SignIn closeModal={closeModal} />
       </Modal>
       <button
-        className="md:block font-medium text-gray-900 bg-yellow-300 p-2 rounded hover:scale-110"
+        className="md:block font-medium text-gray-900 dark:text-gray-200 
+          bg-green-500 p-2 rounded hover:bg-primary-100 hover:scale-110 transition-all"
         onClick={() => setIsModalOpen(true)}
       >
         {props.buttonText}
