@@ -39,6 +39,7 @@ export default function RootLayout({ children }) {
         <ThemeProviders>
           <section className=''>
             <div className="h-screen font-sans">
+              <div className='h-[60vh] w-full absolute top-0 bg-gradient-to-r from-green-200 to-cyan-300 -z-50'></div>
               <Header />
               <main className="mt-24">{ children }</main>
               <Footer />

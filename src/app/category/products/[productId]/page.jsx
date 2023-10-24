@@ -8,7 +8,7 @@ import { useSession } from 'next-auth/react'
 import { BsFillLockFill } from 'react-icons/bs'
 import SignInButton from '@/components/SignIn/SignInButton'
 
-const Blog = () => {
+const ProductSpecific = () => {
   const router = useRouter()
   const productId = router.query?.productId
   console.log(productId)
@@ -32,4 +32,4 @@ const Blog = () => {
   )
 }
 
-export default Blog
+export default ProductSpecific

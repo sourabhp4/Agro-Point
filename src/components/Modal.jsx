@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const Modal = ({ isOpen, children }) => {
   if (!isOpen) {
@@ -7,11 +7,11 @@ const Modal = ({ isOpen, children }) => {
 
   return (
     <>
-        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black bg-opacity-80">  
+        <div className="fixed top-0 left-0 w-[100vw] h-[100vh] z-50 bg-black bg-opacity-80 m-0">  
             {children}
         </div>
     </>
-  );
-};
+  )
+}
 
-export default Modal;
+export default Modal

@@ -3,10 +3,12 @@
 import { useState } from 'react'
 
 import SignIn from './SignIn'
+import Register from './Register'
 import Modal from '../Modal'
 
 const SignInButton =  (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isRegister, setIsRegister] = useState(false)
 
   const closeModal = () => {
     setIsModalOpen(false)
@@ -15,7 +17,8 @@ const SignInButton =  (props) => {
   return (
     <div className='w-max'>
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
-          <SignIn closeModal={closeModal} />
+          <SignIn closeModal={closeModal} isRegister={isRegister} setIsRegister={setIsRegister} />
+          <Register closeModal={closeModal} isRegister={isRegister} setIsRegister={setIsRegister} />
       </Modal>
       <button
         className="md:block font-medium text-gray-900 dark:text-gray-200 

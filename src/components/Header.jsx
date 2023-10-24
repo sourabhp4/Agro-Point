@@ -11,12 +11,16 @@ const Header = () => {
 
   const links = [
     {
+      title: 'Home',
+      href: '/'
+    },
+    {
       title: 'About',
       href: '/about'
     },
     {
-      title: 'Products',
-      href: '/products'
+      title: 'Categories',
+      href: '/category'
     }
   ]
 
