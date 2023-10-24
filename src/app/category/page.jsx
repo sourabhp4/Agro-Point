@@ -59,7 +59,7 @@ const Category = async () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-4">
             {categories.map((category) => {
               return (
-                <div className="font-medium text-gray-900 dark:text-gray-100 p-2 rounded bg-gradient-to-r from-yellow-400 to-green-600">
+                <div key={category.title} className="font-medium text-gray-900 dark:text-gray-100 p-2 rounded bg-gradient-to-r from-yellow-400 to-green-600">
                   <h2 className='text-center text-xl mb-2 uppercase bg-white dark:bg-black rounded-2xl w-fit mx-auto p-2 dark:text-green-600'>{category.title}</h2>
                   <Image
                     alt={category.title}
