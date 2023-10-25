@@ -4,8 +4,6 @@ import React, { useState } from 'react'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 
-import { signIn } from 'next-auth/react'
-
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 
 const SignIn = (props) => {
@@ -18,7 +16,9 @@ const SignIn = (props) => {
 
   const [userInfo, setUserInfo] = useState({ email: '', password: '', rePassword: '' })
   const [userError, setUserError] = useState('')
+  const [userMessage, setUserMessage] = useState('')
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -43,7 +43,7 @@ const SignIn = (props) => {
         setUserError('Password must contain at least one uppercase letter')
         return
       }
-    
+
       if (!/[!@#$%^&*]/.test(userInfo.password)) {
         setUserError('Password must contain at least one special symbol (!@#$%^&*)')
         return
@@ -54,20 +54,28 @@ const SignIn = (props) => {
         return
       }
 
-      const res = await signIn("credentials", {
-        email: userInfo.email,
-        password: userInfo.password,
-        redirect: false,
-      })
+      setIsLoading(true)
 
-      if (res.error) setUserError('Invalid Credentials')
-      else {
-        window.location.reload()
-      }
+      const response = await fetch(
+        `/api/users/register`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "Application/json",
+            "Content-Type": "Application/json",
+          },
+          body: JSON.stringify({ email: userInfo.email, password: userInfo.password }),
+        }
+      )
+      const data = await response.json()
+      console.log(data)
 
+      if (data.status !== 200) setUserError(data.error)
+      else setUserMessage('Registration Successful, Please check for the email from us, to verify your identity. Only successful verification of email will lead to creation of account.')
+      setIsLoading(false)
     } catch (err) {
       console.log(err)
-      setUserError('Something went wrong... Try again')
+      setUserError('Something went wrong... Please try again after some time')
     }
   }
 
@@ -87,7 +95,8 @@ const SignIn = (props) => {
           <div className='flex justify-center'>
             <Image src="/images/agro.png" alt="Logo" width={150} height={100} />
           </div>
-          <form className="mt-6" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
+            <h2 className='text-black text-center sm:text-xl mb-2'>{!isLoading ? 'REGISTRATION' : 'LOADING...'}</h2>
             <div className="mb-4">
               <label
                 htmlFor="email"
@@ -130,9 +139,9 @@ const SignIn = (props) => {
 
                 >
                   {isPasswordVisible ? (
-                    <AiFillEyeInvisible className='text-black' />
+                    <AiFillEyeInvisible className='text-black text-xl' />
                   ) : (
-                    <AiFillEye className='text-black' />
+                    <AiFillEye className='text-black text-xl' />
                   )}
                 </label>
               </div>
@@ -158,14 +167,20 @@ const SignIn = (props) => {
             </div>
 
             {userError &&
-              <div>
-                <p className='bg-red-500 text-white text-xs w-fit mx-auto p-2 rounded-2xl transition-all'>{userError}</p>
+              <div className='mt-2 w-3/4 mx-auto'>
+                <p className='bg-background-100 text-red-700 text-xs text-center w-fit mx-auto p-2 rounded-2xl transition-all'>{userError}</p>
               </div>
+            }
+            {userMessage &&
+              <div className='mt-2 w-3/4 mx-auto'>
+              <p className='bg-background-100 text-primary-800 text-xs text-center w-fit mx-auto p-2 rounded-2xl transition-all'>{userMessage}</p>
+            </div>
             }
 
             <div className="mt-2">
               <button
                 className="w-full px-4 py-2 mt-4 tracking-wide text-white transition-colors duration-200 transform bg-yellow-700 rounded-md hover:bg-yellow-600 focus:outline-none focus:bg-yellow-600"
+                disabled={userMessage || isLoading ? true : false}
               >
                 Register
               </button>
@@ -196,7 +211,7 @@ const SignIn = (props) => {
               }
               }
             >
-              Login Here
+              SignIn Here
             </span>
           </p>
         </div>

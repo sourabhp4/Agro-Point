@@ -3,16 +3,9 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { getServerSession } from 'next-auth/next'
-
-import { authOptions } from '../api/auth/[...nextauth]/route'
-import SignInButton from '@/components/SignIn/SignInButton'
-
-import { BsFillLockFill } from 'react-icons/bs'
 import { AiOutlineDoubleRight } from 'react-icons/ai'
 
 const Category = async () => {
-  const session = await getServerSession(authOptions)
 
   const categories = [
     {
@@ -55,35 +48,28 @@ const Category = async () => {
             CATEGORIES
           </h1>
         </div>
-        {session ?
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-4">
-            {categories.map((category) => {
-              return (
-                <div key={category.title} className="font-medium text-gray-900 dark:text-gray-100 p-2 rounded bg-background-100 dark:bg-gray-900">
-                  <h2 className='text-center text-xl mb-2 uppercase bg-white dark:bg-black rounded-2xl w-fit mx-auto p-2 dark:text-green-600'>{category.title}</h2>
-                  <Image
-                    alt={category.title}
-                    src={category.img}
-                    width={100}
-                    height={100}
-                    className='w-44 h-44 mx-auto'
-                  />
-                  <Link
-                    key={category.title}
-                    href={category.href}
-                    className='flex items-center gap-2 bg-primary-800 text-white dark:bg-black dark:text-green-600 w-fit mx-auto my-3 p-2 rounded-xl hover:scale-110'
-                  >
-                    VIEW <AiOutlineDoubleRight />
-                  </Link>
-                </div>)
-            })}
-          </div>
-          :
-          <div className='h-[35vh] mx-4 flex flex-col gap-6 rounded-3xl p-8 items-center bg-gradient-to-t from-gray-300 dark:to-black light:to-white'>
-            <BsFillLockFill />
-            <SignInButton buttonText={'Sign In to View'} />
-          </div>
-        }
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-4">
+          {categories.map((category) => {
+            return (
+              <div key={category.title} className="font-medium text-gray-900 dark:text-gray-100 p-2 rounded bg-background-100 dark:bg-gray-900">
+                <h2 className='text-center text-xl mb-2 uppercase bg-white dark:bg-black rounded-2xl w-fit mx-auto p-2 dark:text-green-600'>{category.title}</h2>
+                <Image
+                  alt={category.title}
+                  src={category.img}
+                  width={100}
+                  height={100}
+                  className='w-44 h-44 mx-auto'
+                />
+                <Link
+                  key={category.title}
+                  href={category.href}
+                  className='flex items-center gap-2 bg-primary-800 text-white hover:bg-primary-400 hover:text-black border-2 dark:border-gray-900 dark:hover:bg-background-100 dark:bg-black dark:text-green-600 w-fit mx-auto my-3 p-2 rounded-xl hover:scale-110'
+                >
+                  VIEW <AiOutlineDoubleRight />
+                </Link>
+              </div>)
+          })}
+        </div>
       </div>
     </>
   )

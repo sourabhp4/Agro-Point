@@ -9,6 +9,7 @@ import { authOptions } from '../../api/auth/[...nextauth]/route'
 import SignInButton from '@/components/SignIn/SignInButton'
 
 import { BsFillLockFill } from 'react-icons/bs'
+import ContentLock from '@/components/ContentLock'
 
 const Blogs = async () => {
   const session = await getServerSession(authOptions)
@@ -127,10 +128,7 @@ const Blogs = async () => {
             })}
           </ul>
           :
-          <div className='h-[35vh] flex flex-col gap-6 rounded-3xl p-8 items-center bg-gradient-to-t from-gray-300 dark:to-black light:to-white'>
-            <BsFillLockFill />
-            <SignInButton buttonText={'Sign In to View'} />
-          </div>
+          <ContentLock />
         }
       </div>
     </>

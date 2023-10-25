@@ -21,8 +21,7 @@ const SignInButton =  (props) => {
           <Register closeModal={closeModal} isRegister={isRegister} setIsRegister={setIsRegister} />
       </Modal>
       <button
-        className="md:block font-medium text-gray-900 dark:text-gray-200 
-          bg-green-500 p-2 rounded hover:bg-primary-100 hover:scale-110 transition-all"
+        className="md:block font-medium text-white dark:text-gray-900 bg-primary-500 dark:bg-white p-2 rounded hover:scale-110 transition-all"
         onClick={() => setIsModalOpen(true)}
       >
         {props.buttonText}

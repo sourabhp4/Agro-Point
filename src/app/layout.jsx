@@ -38,10 +38,10 @@ export default function RootLayout({ children }) {
       <Provider>
         <ThemeProviders>
           <section className=''>
-            <div className="h-screen font-sans">
-              <div className='h-[60vh] w-full absolute top-0 bg-gradient-to-r from-primary-900 to-primary-900 dark:from-primary-600 dark:to-primary-500 -z-50'></div>
+            <div className="h-screen font-sans flex flex-col justify-between">
+              <div className='h-[60vh] w-full absolute top-0 bg-gradient-to-r from-primary-900 to-primary-600 dark:from-primary-600 dark:to-primary-500 -z-50'></div>
               <Header />
-              <main className="mt-24">{ children }</main>
+              <main className="mt-24 mb-auto">{ children }</main>
               <Footer />
             </div>
           </section>

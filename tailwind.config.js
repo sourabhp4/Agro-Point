@@ -39,7 +39,7 @@ module.exports = {
           900: '#04583A',
         },
         background: {
-          100: '#F5F5F5'
+          100: '#F2F2F2'
         }
       },
       typography: ({ theme }) => ({

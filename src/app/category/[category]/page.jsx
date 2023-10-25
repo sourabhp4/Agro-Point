@@ -10,6 +10,7 @@ import SignInButton from '@/components/SignIn/SignInButton'
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import ContentLock from '@/components/ContentLock'
 
 const CategorySpecific = (props) => {
   const category = props.params?.category
@@ -210,10 +211,7 @@ const CategorySpecific = (props) => {
             </div>
           </>
           :
-          <div className='h-[35vh] w-full mx-2 flex flex-col gap-6 rounded-3xl p-8 items-center bg-gradient-to-t from-gray-300 dark:to-black light:to-white'>
-            <BsFillLockFill />
-            <SignInButton buttonText={'Sign In to View'} />
-          </div>
+          <ContentLock />
         }
       </div>
     </>
