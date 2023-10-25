@@ -51,7 +51,7 @@ const VerifyEmail = () => {
                 LOADING ⌛
               </h1>
               <p className="text-center text-black dark:text-primary-200">
-                <b>Please don't close this window.</b>
+                <b>Please don&apos;t close this window.</b>
               </p>
               <p className="text-center text-black dark:text-primary-200">
                 Your request for verification is under progress...
