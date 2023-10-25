@@ -51,7 +51,7 @@ const Category = async () => {
     <>
       <div>
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-center text-yellow-900">
+          <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-center text-white">
             CATEGORIES
           </h1>
         </div>
@@ -59,7 +59,7 @@ const Category = async () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-4">
             {categories.map((category) => {
               return (
-                <div key={category.title} className="font-medium text-gray-900 dark:text-gray-100 p-2 rounded bg-gradient-to-r from-yellow-400 to-green-600">
+                <div key={category.title} className="font-medium text-gray-900 dark:text-gray-100 p-2 rounded bg-background-100 dark:bg-gray-900">
                   <h2 className='text-center text-xl mb-2 uppercase bg-white dark:bg-black rounded-2xl w-fit mx-auto p-2 dark:text-green-600'>{category.title}</h2>
                   <Image
                     alt={category.title}
@@ -71,7 +71,7 @@ const Category = async () => {
                   <Link
                     key={category.title}
                     href={category.href}
-                    className='flex items-center gap-2 bg-primary-200 text-black dark:bg-black dark:text-green-600 w-fit mx-auto my-3 p-2 rounded-xl hover:scale-110'
+                    className='flex items-center gap-2 bg-primary-800 text-white dark:bg-black dark:text-green-600 w-fit mx-auto my-3 p-2 rounded-xl hover:scale-110'
                   >
                     VIEW <AiOutlineDoubleRight />
                   </Link>

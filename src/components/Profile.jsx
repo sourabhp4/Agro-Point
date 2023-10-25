@@ -126,7 +126,7 @@ const Profile = () => {
           </h3>
           <div className="text-gray-500 dark:text-gray-400">Welcome to your <b>PROFILE</b></div>
         </div>
-        <div className="flex flex-col w-[90vw] md:w-[60vw] items-center bg-gradient-to-t from-primary-200 to-gray-200 dark:to-gray-700 rounded-xl shadow-md">
+        <div className="flex flex-col w-[90vw] md:w-[60vw] items-center bg-background-100 dark:to-gray-700 rounded-xl shadow-md">
           <div className="w-full px-4 md:px-12">
             <form className="mt-6" onSubmit={handleSubmitUsername}>
               <div className="mb-4">
@@ -209,7 +209,7 @@ const Profile = () => {
 
               <div className="mt-2">
                 <button
-                  className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-yellow-700 rounded-md hover:bg-yellow-600 focus:outline-none focus:bg-yellow-600"
+                  className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-primary-800 rounded-md hover:bg-yellow-600 focus:outline-none focus:bg-yellow-600"
                 >
                   Update UserName
                 </button>
@@ -301,7 +301,7 @@ const Profile = () => {
 
               <div className="mt-2 mb-4">
                 <button
-                  className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-yellow-700 rounded-md hover:bg-yellow-600 focus:outline-none focus:bg-yellow-600"
+                  className="w-full px-4 py-2 my-2 tracking-wide text-white transition-colors duration-200 transform bg-primary-800 rounded-md hover:bg-yellow-600 focus:outline-none focus:bg-yellow-600"
                 >
                   Update UserName
                 </button>

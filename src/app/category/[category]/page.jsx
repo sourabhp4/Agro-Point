@@ -108,13 +108,13 @@ const CategorySpecific = (props) => {
     <>
       <div>
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 uppercase tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-center text-yellow-900">
+          <h1 className="text-3xl font-extrabold leading-9 uppercase tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-center text-white">
             {category}
           </h1>
         </div>
         {session ?
           <>
-            <div className='flex justify-center items-center gap-4 text-lg sm:text-xl md:text-2xl text-bold bg-green-400 w-fit mx-auto py-2 px-2 sm:px-6 rounded-xl'>
+            <div className='flex justify-center text-white items-center gap-4 text-lg sm:text-xl md:text-2xl text-bold bg-primary-800 w-fit mx-auto py-2 px-2 sm:px-6 rounded-xl'>
               <BiArrowToLeft
                 className='bg-white text-black dark:bg-black dark:text-white hover:scale-150 scale-125 rounded transition-all duration-300'
                 onClick={() => decrementPageNo(highDecrement)}
@@ -123,7 +123,7 @@ const CategorySpecific = (props) => {
                 className='bg-white text-black dark:bg-black dark:text-white hover:scale-150 scale-125 rounded transition-all duration-300'
                 onClick={() => decrementPageNo(decrement)}
               />
-              <div className='flex flex-col sm:flex-row gap-2 sm:gap-4 text-black'>
+              <div className='flex flex-col sm:flex-row gap-2 sm:gap-4'>
                 <span>Page:</span>
                 <span>{currentPageNo} / {data.totalPages}</span>
               </div>
@@ -186,7 +186,7 @@ const CategorySpecific = (props) => {
               })}
             </ul>
 
-            <div className='flex justify-center items-center gap-4 text-lg sm:text-xl md:text-2xl text-bold bg-green-400 w-fit mx-auto py-2 px-2 sm:px-6 rounded-xl'>
+            <div className='flex justify-center text-white items-center gap-4 text-lg sm:text-xl md:text-2xl text-bold bg-primary-800 w-fit mx-auto py-2 px-2 sm:px-6 rounded-xl'>
               <BiArrowToLeft
                 className='bg-white text-black dark:bg-black dark:text-white hover:scale-150 scale-125 rounded transition-all duration-300'
                 onClick={() => decrementPageNo(highDecrement)}
@@ -195,7 +195,7 @@ const CategorySpecific = (props) => {
                 className='bg-white text-black dark:bg-black dark:text-white hover:scale-150 scale-125 rounded transition-all duration-300'
                 onClick={() => decrementPageNo(decrement)}
               />
-              <div className='flex flex-col sm:flex-row gap-2 sm:gap-4 text-black'>
+              <div className='flex flex-col sm:flex-row gap-2 sm:gap-4'>
                 <span>Page:</span>
                 <span>{currentPageNo} / {data.totalPages}</span>
               </div>

@@ -40,7 +40,7 @@ const Header = () => {
                   />
                 </div>
               </div>
-              <div className="hidden h-6 text-2xl font-semibold sm:block text-yellow-800">
+              <div className="hidden h-6 text-2xl font-semibold sm:block text-gray-900 dark:text-background-100">
                 Agri Review Hub
               </div>
             </div>
@@ -52,7 +52,7 @@ const Header = () => {
               <Link
                 key={link.title}
                 href={link.href}
-                className="hidden md:block font-medium text-gray-900 dark:text-gray-100 hover:bg-green-400 p-2 rounded"
+                className="hidden md:block font-medium text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-900 p-2 rounded"
               >
                 {link.title}
               </Link>

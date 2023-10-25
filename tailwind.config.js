@@ -30,8 +30,17 @@ module.exports = {
       colors: {
         primary: {
           100: '#19D87E',
-          200: '#32EC14'
+          200: '#32EC14',
+          300: '#A1CE5C',
+          400: '#7CD153',
+          500: '#5FA549',
+          600: '#128737',
+          800: '#033221',
+          900: '#04583A',
         },
+        background: {
+          100: '#F5F5F5'
+        }
       },
       typography: ({ theme }) => ({
         DEFAULT: {

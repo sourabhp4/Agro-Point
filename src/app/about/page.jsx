@@ -10,11 +10,11 @@ const About = () => {
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-center text-yellow-900">
+          <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-center text-white">
             &quot; WHERE QUALITY MEETS THE SOIL, AND EVERY PRODUCT TELLS A STORY. &quot;
           </h1>
         </div>
-        <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
+        <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0 bg-background-100 dark:bg-gray-900 mx-4 rounded-xl py-4">
           <div className="flex flex-col items-center space-2 pt-10">
             <div>
               <Image
@@ -25,7 +25,7 @@ const About = () => {
                 className="h-24 w-28 rounded-full"
               />
             </div>
-            <h3 className="pb-2 pt-4 text-2xl font-bold leading-8  text-yellow-600">
+            <h3 className="pb-2 pt-4 text-2xl font-bold leading-8 text-primary-800 dark:text-primary-200">
               AGRI REVIEW HUB
             </h3>
             <div className="text-gray-500 dark:text-gray-400">A Website made for <b>FARMERS</b></div>
@@ -49,20 +49,20 @@ const About = () => {
             <hr />
             <br />
             <div>
-              <b className='text-yellow-600'>Our Mission</b>
+              <b className='text-primary-800 dark:text-primary-200'>Our Mission</b>
               <p>
                 Collaborate with like-minded individuals, exchange ideas, and
                 develop groundbreaking projects that will shape the future of
                 technology.
               </p>
-              <b className='text-yellow-600'>Expert Insights:</b>
+              <b className='text-primary-800 dark:text-primary-200'>Expert Insights:</b>
               <p>
                 To empower farmers, gardeners, and anyone involved in 
                 agriculture with knowledge and confidence. We&apos;re passionate about the world 
                 of agriculture and believe that the right products can make a world of difference 
                 in your yields, efficiency, and overall satisfaction with your work.
               </p>
-              <b className='text-yellow-600'>Get Involved:</b>
+              <b className='text-primary-800 dark:text-primary-200'>Get Involved:</b>
               <p>
                 We believe in the power of collaboration 
                 and welcome contributions from our community. 

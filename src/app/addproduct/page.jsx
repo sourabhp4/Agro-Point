@@ -74,11 +74,11 @@ const AddProduct = () => {
       {session ?
         <div className='flex flex-col items-center'>
           <div className="space-y-2 pb-8 pt-6">
-            <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-yellow-900 text-center">
+            <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-white text-center">
               Add the PRODUCT here...
             </h1>
           </div>
-          <div className="flex flex-col w-[90vw] items-center bg-gradient-to-t from-primary-200 to-gray-200 dark:to-gray-700 rounded-xl shadow-md">
+          <div className="flex flex-col w-[90vw] items-center bg-background-100 to-gray-200 dark:to-gray-700 rounded-xl shadow-md">
 
             <div className="w-full px-4 md:px-12">
               <form className="mt-6" onSubmit={handleSubmit}>
@@ -110,7 +110,7 @@ const AddProduct = () => {
                   </label>
                   <select 
                     id="category" 
-                    className="w-full md:w-1/2 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:ring-blue-500 focus:border-blue-500 block p-1"
+                    className="w-full md:w-1/2 p-2 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:ring-blue-500 focus:border-blue-500 block"
                     onChange={({ target }) => {
                       setProductInfo({ ...productInfo, category: target.value })
                       setUserError('')
@@ -197,7 +197,7 @@ const AddProduct = () => {
                   <div className="flex gap-2 bg-white w-full relative min-h-max border border-yellow-300 rounded p-2 overflow-auto">
                     {productInfo.tags.map((tag, index) => {
                       return (
-                        <div key={index} className="flex items-center gap-1 text-xl text-black bg-primary-200 p-1 rounded-xl">
+                        <div key={index} className="flex items-center gap-1 text-xl text-black bg-white border-2 p-1 rounded-xl">
                           #{tag}
                           <AiFillCloseCircle
                             onClick={() => removeTag(tag)}
@@ -221,7 +221,7 @@ const AddProduct = () => {
                       }}
                     />
                     <label
-                      className="w-fit py-2 px-4 bg-gray-500 text-white rounded hover:scale-105"
+                      className="w-fit py-2 px-4 bg-primary-800 text-white rounded hover:scale-105"
                       onClick={addTag}
                       htmlFor="tags"
                     >
@@ -264,12 +264,12 @@ const AddProduct = () => {
                 <div className="mt-2 mb-4 flex justify-center gap-2 sm:gap-10">
                   <Link
                     href='/profile'
-                    className="w-fit px-4 py-2 tracking-wide text-black transition-colors duration-200 transform bg-red-600 rounded-md hover:bg-red-400 focus:outline-none focus:bg-yellow-600"
+                    className="w-fit px-4 py-2 tracking-wide text-black transition-colors duration-200 transform bg-yellow-600 rounded-md hover:bg-yellow-400 focus:outline-none focus:bg-yellow-600"
                   >
                     CANCEL
                   </Link>
                   <button
-                    className="w-fit px-4 py-2 tracking-wide text-black transition-colors duration-200 transform bg-yellow-600 rounded-md hover:bg-yellow-400 focus:outline-none focus:bg-yellow-600"
+                    className="w-fit px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-primary-800 rounded-md hover:bg-primary-900 focus:outline-none focus:bg-yellow-600"
                   >
                     SUBMIT
                   </button>

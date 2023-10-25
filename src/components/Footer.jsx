@@ -5,7 +5,7 @@ import { BiLogoGmail, BiLogoGithub, BiLogoLinkedinSquare }
 export default function Footer() {
   return (
     <footer>
-      <div className="mt-16 flex flex-col items-center">
+      <div className="mt-8 flex flex-col items-center">
         <div className="mb-3 flex space-x-4 text-xl text-green-600">
           <a href="mailto: agropointofficial@gmail.com" target='_blank' rel='norefferer noopener'><BiLogoGmail /></a>
           <a href="https://github.com/sourabhp4/Agro-Point" target='_blank' rel='norefferer noopener'><BiLogoGithub /></a>
