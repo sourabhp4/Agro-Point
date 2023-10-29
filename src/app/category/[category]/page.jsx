@@ -1,6 +1,5 @@
 'use client'
 
-
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 import { BiArrowToLeft, BiArrowToRight } from 'react-icons/bi'
 
