@@ -15,17 +15,12 @@ export async function POST(request) {
         const reqBody = await request.json()
         const { email, password } = reqBody
 
-        console.log(reqBody)
-
-        //check if user already exists
         const user = await User.findOne({ email })
 
-        if (user) {
-            if (user.isVerified)
-                return NextResponse.json({ error: "Email Already Registered", status: 400 })
+        if (user && user.isVerified) {
+            return NextResponse.json({ error: "Email Already Registered", status: 400 })
         }
 
-        //hash password
         const salt = await bcryptjs.genSalt(5)
         const hashedPassword = await bcryptjs.hash(password, salt)
 
@@ -43,8 +38,6 @@ export async function POST(request) {
             const savedUser = await newUser.save()
             await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id })
         }
-
-        //send verification email
 
         return NextResponse.json({
             message: "Success",

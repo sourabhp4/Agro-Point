@@ -1,7 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
-import { useSession } from 'next-auth/react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import Link from 'next/link'
@@ -9,12 +8,6 @@ import Link from 'next/link'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 
 const SignIn = (props) => {
-
-  const { data: session } = useSession()
-
-  if (session) {
-    window.location.reload()
-  }
 
   const [userInfo, setUserInfo] = useState({ email: '', password: '' })
   const [userError, setUserError] = useState('')
@@ -44,7 +37,6 @@ const SignIn = (props) => {
         }
       )
       const data = await response.json()
-      console.log(data)
 
       if (data.status !== 200){
          setUserError(data.error)
@@ -54,7 +46,7 @@ const SignIn = (props) => {
         setUserMessage('Login Successful')
         setTimeout(() => {
           window.location.reload()
-        }, 2000)
+        }, 1000)
       }
 
     } catch (err) {
@@ -67,8 +59,13 @@ const SignIn = (props) => {
     setIsPasswordVisible((prevState) => !prevState)
   }
 
+  useEffect(() => {
+    if(props.isAuthenticated)
+      window.location.reload()
+  }, [])
+
   return (
-    <>{!session && !props.isRegister &&
+    <>{!props.isAuthenticated && !props.isRegister &&
       <div className="fixed top-0 left-0 w-[100vw] h-[100vh] flex justify-center items-center z-50 bg-black bg-opacity-80">
         <div className="w-[90vw] h-400 p-6 bg-gradient-to-t from-primary-200 to-gray-200 rounded-md shadow-md sm:max-w-xl ">
           <div className="flex justify-end p-1">
@@ -131,7 +128,7 @@ const SignIn = (props) => {
               </div>
             </div>
             <Link
-              href="/auth/forgotPassword"
+              href="/forgotPassword"
               className="text-sm text-blue-600 hover:underline"
             >
               <u>Forgot Password</u>

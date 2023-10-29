@@ -1,17 +1,18 @@
 'use client'
 
 import { BsFillArrowRightCircleFill } from 'react-icons/bs'
-import { useSession } from 'next-auth/react'
 import ContentLock from '@/components/ContentLock'
+import useAuth from '@/lib/useAuth'
 
+import { useState } from 'react'
 
 const Search = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  const { data: session } = useSession()
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-  }
+  useState(async () => {
+    const status = await useAuth()
+    setIsAuthenticated(status)
+  })
 
   return (
     <>
@@ -31,7 +32,7 @@ const Search = () => {
           </form>
         </div>
       </div>
-      {session ?
+      {isAuthenticated ?
         <></>
         :
         <ContentLock />

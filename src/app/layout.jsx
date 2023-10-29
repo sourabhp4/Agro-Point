@@ -2,13 +2,13 @@
 import { Space_Grotesk } from 'next/font/google'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import Provider from '../components/Provider'
 
 import { ThemeProviders } from './theme-providers'
 
 import './globals.css'
 
 import 'css/tailwind.css'
+import NextTopLoader from 'nextjs-toploader'
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -23,31 +23,33 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    
-  <html
-    lang='en'
-    className={`${space_grotesk.variable} scroll-smooth`}
-    suppressHydrationWarning
-  >
-    <meta name="msapplication-TileColor" content="#000000" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
-    <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
 
-    <body className="bg-white text-black antialiased dark:bg-gray-950 dark:text-white" suppressHydrationWarning={true}>
-      <Provider>
+    <html
+      lang='en'
+      className={`${space_grotesk.variable} scroll-smooth`}
+      suppressHydrationWarning
+    >
+      <meta name="msapplication-TileColor" content="#000000" />
+      <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
+      <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
+      <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+
+      <body className="bg-white text-black antialiased dark:bg-gray-950 dark:text-white" suppressHydrationWarning={true}>
+        <NextTopLoader
+          color="#FFFFFF"
+          options={{ showSpinner: false }}
+        />
         <ThemeProviders>
           <section className=''>
             <div className="h-screen font-sans flex flex-col justify-between">
               <div className='h-[60vh] w-full absolute top-0 bg-gradient-to-r from-primary-900 to-primary-600 dark:from-primary-600 dark:to-primary-500 -z-50'></div>
               <Header />
-              <main className="mt-24 mb-auto">{ children }</main>
+              <main className="mt-24 mb-auto">{children}</main>
               <Footer />
             </div>
           </section>
         </ThemeProviders>
-      </Provider>
-    </body>
-  </html>
+      </body>
+    </html>
   )
 }

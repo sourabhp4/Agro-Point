@@ -1,21 +1,25 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
 
-import { BsFillLockFill } from 'react-icons/bs'
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 import { BiArrowToLeft, BiArrowToRight } from 'react-icons/bi'
 
-import SignInButton from '@/components/SignIn/SignInButton'
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import ContentLock from '@/components/ContentLock'
+import useAuth from '@/lib/useAuth'
 
 const CategorySpecific = (props) => {
   const category = props.params?.category
 
-  const { data: session } = useSession()
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  useState(async () => {
+    const status = await useAuth()
+    setIsAuthenticated(status)
+  })
+
   const [currentPageNo, setCurrentPageNo] = useState(1)
 
   const increment = 1
@@ -113,7 +117,7 @@ const CategorySpecific = (props) => {
             {category}
           </h1>
         </div>
-        {session ?
+        {isAuthenticated ?
           <>
             <div className='flex justify-center text-white items-center gap-4 text-lg sm:text-xl md:text-2xl text-bold bg-primary-800 w-fit mx-auto py-2 px-2 sm:px-6 rounded-xl'>
               <BiArrowToLeft

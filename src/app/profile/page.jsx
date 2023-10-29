@@ -1,13 +1,21 @@
+'use client'
 
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../api/auth/[...nextauth]/route'
-
-// import AdminProfile from '@/components/AdminProfile'
 import Profile from '@/components/Profile'
 import ContentLock from '@/components/ContentLock'
+import useAuth from '@/lib/useAuth'
 
-const ProfileComponent = async () => {
-  const session = await getServerSession(authOptions)
+import { useState } from 'react'
+
+const ProfileComponent = () => {
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [user, setUser] = useState(null)
+
+  useState(async () => {
+    const {status, user} = await useAuth()
+    setIsAuthenticated(status)
+    setUser(user)
+  })
 
   return (
     <>
@@ -16,8 +24,8 @@ const ProfileComponent = async () => {
           YOUR PROFILE
         </h1>
       </div>
-      {session ? 
-        <Profile />
+      {isAuthenticated ? 
+        <Profile user={user} />
         :
         <ContentLock />
       }

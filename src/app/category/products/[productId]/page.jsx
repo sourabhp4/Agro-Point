@@ -1,26 +1,27 @@
 'use client'
 
-import React from 'react'
+import { useState } from 'react'
 
-import { useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
-
-import { BsFillLockFill } from 'react-icons/bs'
-import SignInButton from '@/components/SignIn/SignInButton'
 import ContentLock from '@/components/ContentLock'
+import useAuth from '@/lib/useAuth'
 
-const ProductSpecific = () => {
-  const router = useRouter()
-  const productId = router.query?.productId
-  console.log(productId)
+const ProductSpecific = (props) => {
+  
+  const productId = props.params?.productId
+  console.log('ProductId: ', productId)
 
-  const { data: session } = useSession()
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  useState(async () => {
+    const status = await useAuth()
+    setIsAuthenticated(status)
+  })
 
   return (
     <>
       <div>
           <h1 className='text-center'>Product Specific Page</h1>
-        {session ? 
+        {isAuthenticated ? 
           <h1>Product Content</h1>
           :
           <ContentLock />

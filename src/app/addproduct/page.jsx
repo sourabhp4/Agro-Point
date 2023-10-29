@@ -1,15 +1,22 @@
 'use client'
 
 import NotFound from "@/components/NotFound"
-import { useSession } from 'next-auth/react'
+import useAuth from '@/lib/useAuth'
+
 import Link from "next/link"
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { AiFillCloseCircle } from "react-icons/ai"
 
 const AddProduct = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [user, setUser] = useState(null)
 
-  const { data: session } = useSession()
+  useState(async () => {
+    const {status, user} = await useAuth()
+    setIsAuthenticated(status)
+    setUser(user)
+  })
 
   const [productInfo, setProductInfo] = useState({
     title: '',
@@ -67,25 +74,22 @@ const AddProduct = () => {
     } else setTagError('Tag already present')
   }
 
-
-  //Make this only to admins
   return (
     <>
-      {session ?
+      {isAuthenticated && user.isAdmin ?
         <div className='flex flex-col items-center'>
           <div className="space-y-2 pb-8 pt-6">
-            <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-white text-center">
+            <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-white dark:text-gray-900 text-center">
               Add the PRODUCT here...
             </h1>
           </div>
-          <div className="flex flex-col w-[90vw] items-center bg-background-100 to-gray-200 dark:to-gray-700 rounded-xl shadow-md">
-
+          <div className="flex flex-col w-[90vw] items-center bg-background-100 dark:bg-gray-900 rounded-xl shadow-md">
             <div className="w-full px-4 md:px-12">
               <form className="mt-6" onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label
                     htmlFor="title"
-                    className="block text-sm font-semibold text-gray-800"
+                    className="block text-sm font-semibold text-gray-800 dark:text-gray-200"
                   >
                     Product Title
                   </label>
@@ -104,7 +108,7 @@ const AddProduct = () => {
                 <div className="mb-4">
                   <label
                     htmlFor="category"
-                    className="block text-sm font-semibold text-gray-800"
+                    className="block text-sm font-semibold text-gray-800 dark:text-gray-200"
                   >
                     Category
                   </label>
@@ -117,18 +121,20 @@ const AddProduct = () => {
                       console.log({ ...productInfo, category: target.value })
                     }}
                   >
-                    <option defaultValue value="">Choose a country</option>
-                    <option value="US">United States</option>
-                    <option value="CA">Canada</option>
-                    <option value="FR">France</option>
-                    <option value="DE">Germany</option>
+                    <option defaultValue value="">Choose a Category</option>
+                    <option value="FERTILIZERS">FERTILIZERS</option>
+                    <option value="PESTICIDES">PESTICIDES</option>
+                    <option value="TOOLS">TOOLS</option>
+                    <option value="SEEDS">SEEDS</option>
+                    <option value="VEHICLES">VEHICLES</option>
+                    <option value="OTHER">OTHER</option>
                   </select>
                 </div>
 
                 <div className="mb-4">
                   <label
                     htmlFor="description"
-                    className="block text-sm font-semibold text-gray-800"
+                    className="block text-sm font-semibold text-gray-800 dark:text-gray-200"
                   >
                     Description (Short and Sweet)
                   </label>
@@ -147,14 +153,14 @@ const AddProduct = () => {
                 <div className="mb-4">
                   <label
                     htmlFor="releaseDate"
-                    className="block text-sm font-semibold text-gray-800"
+                    className="block text-sm font-semibold text-gray-800 dark:text-gray-200"
                   >
                     Release Date
                   </label>
                   <input
                     id="releaseDate"
                     type="date"
-                    className="block w-full sm:w-fit px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    className="block w-full sm:w-fit px-4 py-2 mt-2 text-gray-900 border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     autoComplete='true'
                     onChange={({ target }) => {
                       setProductInfo({ ...productInfo, releaseDate: target.value })
@@ -167,7 +173,7 @@ const AddProduct = () => {
                   <div>
                     <label
                       htmlFor="image"
-                      className="block text-sm font-semibold text-gray-800"
+                      className="block text-sm font-semibold text-gray-800 dark:text-gray-200"
                     >
                       Image
                     </label>
@@ -190,7 +196,7 @@ const AddProduct = () => {
                 <div className="mb-4">
                   <label
                     htmlFor="tags"
-                    className="block text-sm font-semibold text-gray-800"
+                    className="block text-sm font-semibold text-gray-800 dark:text-gray-200"
                   >
                     Tags
                   </label>
@@ -239,7 +245,7 @@ const AddProduct = () => {
                 <div className="mb-4">
                   <label
                     htmlFor="details"
-                    className="block text-sm font-semibold text-gray-800"
+                    className="block text-sm font-semibold text-gray-800 dark:text-gray-200"
                   >
                     Product Details
                   </label>
