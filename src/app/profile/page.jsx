@@ -4,18 +4,22 @@ import Profile from '@/components/Profile'
 import ContentLock from '@/components/ContentLock'
 import useAuth from '@/lib/useAuth'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const ProfileComponent = () => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState(null)
 
-  useState(async () => {
-    const {status, user} = await useAuth()
-    setIsAuthenticated(status)
-    setUser(user)
-  })
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const { user, status} = await useAuth()
+      setIsAuthenticated(status)
+      setUser(user)
+    }
+
+    checkAuthStatus()
+  }, [])
 
   return (
     <>

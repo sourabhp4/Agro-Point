@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import SignInButton from './SignIn/SignInButton'
 
@@ -11,10 +11,14 @@ const MobileNav = () => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  useState(async () => {
-    const { status } = await useAuth()
-    setIsAuthenticated(status)
-  })
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const { status } = await useAuth()
+      setIsAuthenticated(status)
+    }
+
+    checkAuthStatus()
+  }, [])
 
   const links = [
     {

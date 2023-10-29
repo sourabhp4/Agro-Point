@@ -4,7 +4,7 @@ import NotFound from "@/components/NotFound"
 import useAuth from '@/lib/useAuth'
 
 import Link from "next/link"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { AiFillCloseCircle } from "react-icons/ai"
 
@@ -12,11 +12,15 @@ const AddProduct = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState(null)
 
-  useState(async () => {
-    const {status, user} = await useAuth()
-    setIsAuthenticated(status)
-    setUser(user)
-  })
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const {status , user} = await useAuth()
+      setIsAuthenticated(status)
+      setUser(user)
+    }
+
+    checkAuthStatus()
+  }, [])
 
   const [productInfo, setProductInfo] = useState({
     title: '',

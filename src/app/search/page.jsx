@@ -4,15 +4,19 @@ import { BsFillArrowRightCircleFill } from 'react-icons/bs'
 import ContentLock from '@/components/ContentLock'
 import useAuth from '@/lib/useAuth'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Search = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  useState(async () => {
-    const status = await useAuth()
-    setIsAuthenticated(status)
-  })
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const { status } = await useAuth()
+      setIsAuthenticated(status)
+    }
+
+    checkAuthStatus()
+  }, [])
 
   return (
     <>

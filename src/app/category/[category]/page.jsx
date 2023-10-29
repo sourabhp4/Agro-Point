@@ -3,7 +3,7 @@
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 import { BiArrowToLeft, BiArrowToRight } from 'react-icons/bi'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import ContentLock from '@/components/ContentLock'
@@ -14,10 +14,14 @@ const CategorySpecific = (props) => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  useState(async () => {
-    const status = await useAuth()
-    setIsAuthenticated(status)
-  })
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const { status } = await useAuth()
+      setIsAuthenticated(status)
+    }
+
+    checkAuthStatus()
+  }, [])
 
   const [currentPageNo, setCurrentPageNo] = useState(1)
 

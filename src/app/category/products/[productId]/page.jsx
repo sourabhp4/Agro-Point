@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import ContentLock from '@/components/ContentLock'
 import useAuth from '@/lib/useAuth'
@@ -12,10 +12,14 @@ const ProductSpecific = (props) => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  useState(async () => {
-    const status = await useAuth()
-    setIsAuthenticated(status)
-  })
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const { status }  = await useAuth()
+      setIsAuthenticated(status)
+    }
+
+    checkAuthStatus()
+  }, [])
 
   return (
     <>
