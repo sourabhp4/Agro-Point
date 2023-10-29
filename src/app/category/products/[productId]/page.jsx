@@ -12,14 +12,11 @@ const ProductSpecific = (props) => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      const { status }  = await useAuth()
-      setIsAuthenticated(status)
-    }
+  const { status } = useAuth()
 
-    checkAuthStatus()
-  }, [])
+  useEffect(() => {
+    setIsAuthenticated(status)
+  }, [status])
 
   return (
     <>

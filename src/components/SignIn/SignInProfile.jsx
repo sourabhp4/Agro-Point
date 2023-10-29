@@ -18,14 +18,11 @@ const SignInProfile = forwardRef((props, ref) => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      const { status } = await useAuth()
-      setIsAuthenticated(status)
-    }
+  const { status } = useAuth()
 
-    checkAuthStatus()
-  }, [])
+  useEffect(() => {
+    setIsAuthenticated(status)
+  }, [status])
 
   const closeModal = () => {
     setIsModalOpen(false)

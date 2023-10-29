@@ -9,18 +9,15 @@ import { useState, useEffect } from 'react'
 const ProfileComponent = () => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [user, setUser] = useState(null)
+  const [userData, setUserData] = useState(null)
+
+  const { status, user } = useAuth()
 
   useEffect(() => {
-    const checkAuthStatus = async () => {
-      const { user, status} = await useAuth()
-      setIsAuthenticated(status)
-      setUser(user)
-    }
-
-    checkAuthStatus()
-  }, [])
-
+    setIsAuthenticated(status)
+    setUserData(user)
+  }, [status, user])
+  
   return (
     <>
       <div className="space-y-2 pb-8 pt-6">
@@ -28,7 +25,7 @@ const ProfileComponent = () => {
           YOUR PROFILE
         </h1>
       </div>
-      {isAuthenticated ? 
+      {isAuthenticated ?
         <Profile user={user} />
         :
         <ContentLock />
