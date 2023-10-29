@@ -10,17 +10,14 @@ import { AiFillCloseCircle } from "react-icons/ai"
 
 const AddProduct = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [user, setUser] = useState(null)
+  const [userData, setUserData] = useState(null)
+
+  const { status, user } = useAuth()
 
   useEffect(() => {
-    const checkAuthStatus = async () => {
-      const {status , user} = await useAuth()
-      setIsAuthenticated(status)
-      setUser(user)
-    }
-
-    checkAuthStatus()
-  }, [])
+    setIsAuthenticated(status)
+    setUserData(user)
+  }, [status, user])
 
   const [productInfo, setProductInfo] = useState({
     title: '',
@@ -80,7 +77,7 @@ const AddProduct = () => {
 
   return (
     <>
-      {isAuthenticated && user.isAdmin ?
+      {isAuthenticated && userData.isAdmin ?
         <div className='flex flex-col items-center'>
           <div className="space-y-2 pb-8 pt-6">
             <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-white dark:text-gray-900 text-center">
