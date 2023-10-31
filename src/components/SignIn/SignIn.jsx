@@ -122,6 +122,7 @@ const SignIn = (props) => {
             <Link
               href="/forgotPassword"
               className="text-sm text-blue-600 hover:underline"
+              onClick={props.closeModal}
             >
               <u>Forgot Password</u>
             </Link>
