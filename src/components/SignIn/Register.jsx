@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
@@ -75,14 +75,9 @@ const Register = (props) => {
   const togglePassword = () => {
     setIsPasswordVisible((prevState) => !prevState)
   }
-  
-  useEffect(() => {
-    if(props.isAuthenticated)
-      window.location.reload()
-  }, [props.isAuthenticated])
 
   return (
-    <>{!props.isAuthenticated && props.isRegister &&
+    <>{props.isRegister &&
       <div className="fixed top-0 left-0 w-[100vw] h-[100vh] flex justify-center items-center z-50 bg-black bg-opacity-80">
         <div className="w-[90vw] h-400 p-6 bg-gradient-to-t from-primary-200 to-gray-200 rounded-md shadow-md sm:max-w-xl ">
           <div className="flex justify-end p-1">

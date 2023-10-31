@@ -1,40 +1,57 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
+import { useSession } from 'next-auth/react'
+import ContentLock from './ContentLock'
+import Loading from './Loading'
 
-const Profile = ({ user }) => {
+const Profile = () => {
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false)
   const [isOldPasswordVisible, setIsOldPasswordVisible] = useState(false)
-  const [userName, setUserName] = useState(user.username)
+
+  const [user, setUser] = useState({
+    username: '',
+    isAdmin: false,
+  })
+
   const [userInfo, setUserInfo] = useState({
-    email: user.email,
+    email: '',
     password: '',
-    userName: user.username,
+    username: '',
     oldPassword: '',
     newPassword: '',
     newRePassword: '',
   })
 
-  const [userNameError, setUserNameError] = useState('')
-  const [userPassError, setUserPassError] = useState('')
+  const { data: session, status } = useSession()
+
+  useEffect(() => {
+    if (session?.user?.email) {
+      setUserInfo({ email: session.user.email, username: session.user?.username })
+      setUser({ id: session.user?.id, username: session.user?.username, isAdmin: session.user?.isAdmin })
+    }
+  }, [session])
+
+  const [userNameMessage, setUserNameMessage] = useState({ message: '', complete: false})
+  const [userPassMessage, setUserPassMessage] = useState({ message: '', complete: false})
 
   const handleSubmitUsername = async (e) => {
     e.preventDefault()
     try {
-      if (userInfo.userName === userName) {
-        setUserNameError('No change found in the username')
+      if (userInfo.email === '' || userInfo.password === '') {
+        setUserNameMessage({ message: 'Complete all fields', complete: false})
         return
       }
-      if (userInfo.email === '' || userInfo.password === '') {
-        setUserNameError('Complete all fields')
+      if (userInfo.username === user.username) {
+        setUserNameMessage({ message: 'No change found in the username', complete: false})
         return
       }
 
@@ -46,24 +63,24 @@ const Profile = ({ user }) => {
             Accept: "Application/json",
             "Content-Type": "Application/json",
           },
-          body: JSON.stringify({ id: user.id, email: userInfo.email, password: userInfo.password, username: userInfo.userName }),
+          body: JSON.stringify({ id: user.id, email: userInfo.email, password: userInfo.password, username: userInfo.username }),
         }
       )
       const data = await response.json()
 
-      if (data.status !== 200) setUserNameError(data.error)
+      if (data.status !== 200) setUserNameMessage({ message: data.error, complete: false})
       else {
-        setUserName(userInfo.userName)
+        setUserNameMessage({ message: 'Username Updated Successfully', complete: true})
+        setUser({ ...user, username: userInfo.username})
         setUserInfo({
           ...userInfo,
           password: ''
         })
-        // window.location.reload()
       }
 
     } catch (err) {
       console.log(err)
-      setUserNameError('Something went wrong... Try again')
+      setUserNameMessage({ message: 'Something went wrong... Try again', complete: false})
     }
   }
 
@@ -71,32 +88,32 @@ const Profile = ({ user }) => {
     e.preventDefault()
     try {
       if (userInfo.email === '' || userInfo.newPassword === '') {
-        setUserPassError('Complete all fields')
+        setUserPassMessage({ message: 'Complete all fields', complete: false})
         return
       }
-
+      console.log('hello')
       if (userInfo.newPassword.length < 8) {
-        setUserPassError('Length of the Password must atleast be 8 characters')
+        setUserPassMessage({ message: 'Length of the Password must atleast be 8 characters', complete: false})
         return
       }
 
       if (!/[a-z]/.test(userInfo.newPassword)) {
-        setUserPassError('Password must contain at least one lowercase letter')
+        setUserPassMessage({ message: 'Password must contain at least one lowercase letter', complete: false})
         return
       }
 
       if (!/[A-Z]/.test(userInfo.newPassword)) {
-        setUserPassError('Password must contain at least one uppercase letter')
+        setUserPassMessage({ message: 'Password must contain at least one uppercase letter', complete: false})
         return
       }
 
       if (!/[!@#$%^&*]/.test(userInfo.newPassword)) {
-        setUserPassError('Password must contain at least one special symbol (!@#$%^&*)')
+        setUserPassMessage({ message: 'Password must contain at least one special symbol (!@#$%^&*)', complete: false})
         return
       }
 
       if (userInfo.newPassword !== userInfo.newRePassword) {
-        setUserPassError('Both passwords should match')
+        setUserPassMessage({ message: 'Both passwords should match', complete: false})
         return
       }
 
@@ -113,7 +130,7 @@ const Profile = ({ user }) => {
       )
       const data = await response.json()
 
-      if (data.status !== 200) setUserPassError(data.error)
+      if (data.status !== 200) setUserPassMessage({ message: data.error, complete: false})
       else {
         setUserInfo({
           ...userInfo,
@@ -121,12 +138,12 @@ const Profile = ({ user }) => {
           newPassword: '',
           newRePassword: '',
         })
-        // window.location.reload()
+        setUserPassMessage({ message: 'Change of Password Successful', complete: true})
       }
 
     } catch (err) {
       console.log(err)
-      setUserPassError('Something went wrong... Try again')
+      setUserPassMessage({ message: 'Something went wrong... Try again', complete: false})
     }
   }
 
@@ -143,18 +160,19 @@ const Profile = ({ user }) => {
   }
 
   return (
-    <>
+    <>{session &&
       <div className="flex flex-col md:flex-row justify-center gap-2 md:mx-4">
         <div className="flex flex-col items-center mx-4 w-full md:w-[30vw]">
           <Image
             src='/images/farmer.png'
             alt="avatar"
+            priority={false}
             width={200}
             height={200}
             className="h-48 w-48 rounded-full"
           />
           <h3 className="pb-2 pt-4 text-2xl font-bold leading-8 text-center text-yellow-700">
-            Hey <b className='text-yellow-600'>{userName} </b>... 👋🏼
+            Hey <b className='text-yellow-600'>{user.username} </b>... 👋🏼
           </h3>
           <div className="text-black dark:text-white">Welcome to your <b>PROFILE</b></div>
         </div>
@@ -188,7 +206,7 @@ const Profile = ({ user }) => {
                   type="text"
                   className="block w-full px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   readOnly
-                  value={userInfo.email}
+                  value={userInfo.email || ''}
                 />
               </div>
               <div className='mb-2'>
@@ -196,17 +214,17 @@ const Profile = ({ user }) => {
                   htmlFor="username"
                   className="block text-sm font-semibold text-gray-800"
                 >
-                  UserName
+                  Username
                 </label>
                 <input
                   id="username"
                   type="text"
                   className="block w-full px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   autoComplete='true'
-                  value={userInfo.userName}
+                  value={userInfo.username || ''}
                   onChange={({ target }) => {
-                    setUserInfo({ ...userInfo, userName: target.value })
-                    setUserNameError('')
+                    setUserInfo({ ...userInfo, username: target.value })
+                    setUserNameMessage({ message: '', complete: false})
                   }}
                 />
               </div>
@@ -222,11 +240,11 @@ const Profile = ({ user }) => {
                     id="password"
                     type={isPasswordVisible ? "text" : "password"}
                     autoComplete='true'
-                    value={userInfo.password}
+                    value={userInfo.password || ''}
                     className='w-full mr-1 focus:outline-none bg-white'
                     onChange={({ target }) => {
                       setUserInfo({ ...userInfo, password: target.value })
-                      setUserNameError('')
+                      setUserNameMessage({ message: '', complete: false})
                     }}
                   />
                   <label
@@ -249,9 +267,9 @@ const Profile = ({ user }) => {
                 <u>Forgot Password</u>
               </Link>
 
-              {userNameError &&
+              {userNameMessage.message &&
                 <div>
-                  <p className='text-red-500 text-xs w-fit mx-auto p-2 rounded-2xl transition-all'>{userNameError}</p>
+                  <p className={( userNameMessage.complete ? 'text-green-600' : 'text-red-500' ) + ' text-sm w-fit mx-auto p-2 rounded-2xl transition-all'}>{userNameMessage.message}</p>
                 </div>
               }
 
@@ -259,7 +277,7 @@ const Profile = ({ user }) => {
                 <button
                   className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-primary-600 rounded-md hover:bg-primary-800 focus:outline-none focus:bg-primary-800"
                 >
-                  Update UserName
+                  Update Username
                 </button>
               </div>
             </form>
@@ -284,10 +302,10 @@ const Profile = ({ user }) => {
                       type={isOldPasswordVisible ? "text" : "password"}
                       className='w-full mr-1 focus:outline-none bg-white'
                       autoComplete='true'
-                      value={userInfo.oldPassword}
+                      value={userInfo.oldPassword || ''}
                       onChange={({ target }) => {
                         setUserInfo({ ...userInfo, oldPassword: target.value })
-                        setUserPassError('')
+                        setUserPassMessage({ message: '', complete: false})
                       }}
                     />
                     <label
@@ -322,11 +340,11 @@ const Profile = ({ user }) => {
                     id="newPassword"
                     type={isNewPasswordVisible ? "text" : "password"}
                     autoComplete='true'
-                    value={userInfo.newPassword}
+                    value={userInfo.newPassword || ''}
                     className='w-full mr-1 focus:outline-none bg-white'
                     onChange={({ target }) => {
                       setUserInfo({ ...userInfo, newPassword: target.value })
-                      setUserPassError('')
+                      setUserPassMessage({ message: '', complete: false})
                     }}
                   />
                   <label
@@ -355,17 +373,17 @@ const Profile = ({ user }) => {
                   type="password"
                   className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   autoComplete='true'
-                  value={userInfo.newRePassword}
+                  value={userInfo.newRePassword || ''}
                   onChange={({ target }) => {
                     setUserInfo({ ...userInfo, newRePassword: target.value })
-                    setUserPassError('')
+                    setUserPassMessage({ message: '', complete: false})
                   }}
                 />
               </div>
 
-              {userPassError &&
+              {userPassMessage.message &&
                 <div>
-                  <p className='text-red-500  text-xs w-fit mx-auto p-2 rounded-2xl transition-all'>{userPassError}</p>
+                  <p className={( userPassMessage.complete ? 'text-green-600' : 'text-red-500' ) + ' text-sm w-fit mx-auto p-2 rounded-2xl transition-all' }>{userPassMessage.message}</p>
                 </div>
               }
 
@@ -380,6 +398,9 @@ const Profile = ({ user }) => {
           </div>
         </div>
       </div>
+    }
+    {!session && status === 'unauthenticated' &&  <ContentLock />}
+    {!session && status === 'loading' &&  <Loading />}
     </>
   )
 }

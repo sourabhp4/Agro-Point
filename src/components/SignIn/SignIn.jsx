@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 
 import Link from 'next/link'
 
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
+import { signIn } from 'next-auth/react'
 
 const SignIn = (props) => {
 
@@ -25,24 +26,20 @@ const SignIn = (props) => {
       }
       setIsLoading(true)
 
-      const response = await fetch(
-        `/api/users/signIn`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "Application/json",
-            "Content-Type": "Application/json",
-          },
-          body: JSON.stringify({ email: userInfo.email, password: userInfo.password }),
-        }
-      )
-      const data = await response.json()
+      const response = signIn('credentials', {
+        email: userInfo.email,
+        password: userInfo.password,
+        redirect: false
+      })
+      
+      const data = await response
 
-      if (data.status !== 200){
+      if (data.error){
          setUserError(data.error)
          setIsLoading(false)
       }
       else{
+        setIsLoading(false)
         setUserMessage('Login Successful')
         setTimeout(() => {
           window.location.reload()
@@ -59,13 +56,8 @@ const SignIn = (props) => {
     setIsPasswordVisible((prevState) => !prevState)
   }
 
-  useEffect(() => {
-    if(props.isAuthenticated)
-      window.location.reload()
-  }, [])
-
   return (
-    <>{!props.isAuthenticated && !props.isRegister &&
+    <>{!props.isRegister &&
       <div className="fixed top-0 left-0 w-[100vw] h-[100vh] flex justify-center items-center z-50 bg-black bg-opacity-80">
         <div className="w-[90vw] h-400 p-6 bg-gradient-to-t from-primary-200 to-gray-200 rounded-md shadow-md sm:max-w-xl ">
           <div className="flex justify-end p-1">

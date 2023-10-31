@@ -77,13 +77,13 @@ const VerifyEmail = () => {
                 ❌
               </h1>
               <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-center text-primary-400 dark:text-white">
-                INVALID TOKEN
+                INVALID URL / TIMEOUT
               </h1>
               <p className="text-center text-black dark:text-primary-200">
-                <b>Please consider rechecking the RECENT TOKEN sent by us.</b>
+                <b>Please consider rechecking the RECENT MAIL sent by us.</b>
               </p>
               <p className="text-center text-black dark:text-primary-200 mt-2">
-                There may be a chance that you may have already been verified (If token string is proper).
+                There may be a chance that you may have already been verified (If URL string is proper).
               </p>
               <div className="mt-4">
                 <SignInButton buttonText={'Click to SIGNIN'} />

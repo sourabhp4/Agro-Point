@@ -1,21 +1,15 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import SignInButton from './SignIn/SignInButton'
 
-import useAuth from '@/lib/useAuth'
+import { useSession } from 'next-auth/react'
 
 const MobileNav = () => {
   const [navShow, setNavShow] = useState(false)
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-  const { status } = useAuth()
-
-  useEffect(() => {
-    setIsAuthenticated(status)
-  }, [status])
+  const { data: session } = useSession()
 
   const links = [
     {
@@ -92,7 +86,7 @@ const MobileNav = () => {
               </Link>
             </div>
           ))}
-          {isAuthenticated ?
+          {session ?
             <>
               <div className="px-12 py-4">
                 <Link

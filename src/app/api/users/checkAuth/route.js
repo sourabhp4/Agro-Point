@@ -47,14 +47,14 @@ export async function GET(request) {
                     httpOnly: true,
                     maxAge: 86400,
                 })
-                console.log('CheckAuthenticated Success: ', user.email)
+                console.log('CheckAuth Success: ', user.email)
                 return response
             }
         }
         else throw new Error('Unauthorized')
 
     } catch (error) {
-        console.log('CheckAuthenticated Error: ', error.message)
+        console.log('CheckAuth Error: ', error.message)
         const response = NextResponse.json({
             message: "Unauthorized",
             success: false,

@@ -13,7 +13,7 @@ export async function POST(request) {
     try {
 
         const reqBody = await request.json()
-        const { id, email, username, password } = reqBody
+        const { id, username, password } = reqBody
 
         const user = await User.findById(id)
         if (!user) {

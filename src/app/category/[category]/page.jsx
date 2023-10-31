@@ -3,22 +3,17 @@
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 import { BiArrowToLeft, BiArrowToRight } from 'react-icons/bi'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import ContentLock from '@/components/ContentLock'
-import useAuth from '@/lib/useAuth'
+
+import { useSession } from 'next-auth/react'
 
 const CategorySpecific = (props) => {
   const category = props.params?.category
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-  const { status } = useAuth()
-
-  useEffect(() => {
-    setIsAuthenticated(status)
-  }, [status])
+  const { data: session } = useSession()
 
   const [currentPageNo, setCurrentPageNo] = useState(1)
 
@@ -117,7 +112,7 @@ const CategorySpecific = (props) => {
             {category}
           </h1>
         </div>
-        {isAuthenticated ?
+        {session ?
           <>
             <div className='flex justify-center text-white items-center gap-4 text-lg sm:text-xl md:text-2xl text-bold bg-primary-800 w-fit mx-auto py-2 px-2 sm:px-6 rounded-xl'>
               <BiArrowToLeft

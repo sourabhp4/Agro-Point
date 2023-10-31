@@ -9,6 +9,7 @@ import './globals.css'
 
 import 'css/tailwind.css'
 import NextTopLoader from 'nextjs-toploader'
+import Provider from '@/components/Provider'
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -39,17 +40,20 @@ export default function RootLayout({ children }) {
           color="#FFFFFF"
           options={{ showSpinner: false }}
         />
-        <ThemeProviders>
-          <section className=''>
-            <div className="h-screen font-sans flex flex-col justify-between">
-              <div className='h-[60vh] w-full absolute top-0 bg-gradient-to-r from-primary-900 to-primary-600 dark:from-primary-600 dark:to-primary-500 -z-50'></div>
-              <Header />
-              <main className="mt-24 mb-auto">{children}</main>
-              <Footer />
-            </div>
-          </section>
-        </ThemeProviders>
+        <Provider>
+          <ThemeProviders>
+            <section className=''>
+              <div className="h-screen font-sans flex flex-col justify-between">
+                <div className='h-[60vh] w-full absolute top-0 bg-gradient-to-r from-primary-600 to-primary-500 dark:from-primary-900 dark:to-primary-600 -z-50'></div>
+                <Header />
+                <main className="mt-24 mb-auto">{children}</main>
+                <Footer />
+              </div>
+            </section>
+          </ThemeProviders>
+        </Provider>
       </body>
     </html>
   )
 }
+

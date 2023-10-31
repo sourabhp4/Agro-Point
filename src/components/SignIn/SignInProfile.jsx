@@ -5,24 +5,19 @@ import Link from 'next/link'
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { BiUserCircle } from 'react-icons/bi'
 
+import { useSession, signOut } from 'next-auth/react'
+
 import SignIn from './SignIn'
 import Register from './Register'
 import Modal from '../Modal'
-
-import useAuth from '@/lib/useAuth'
+import LoadingIcon from '../LoadingIcon'
 
 const SignInProfile = forwardRef((props, ref) => {
   const [isNavOpen, setNavOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isRegister, setIsRegister] = useState(false)
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-  const { status } = useAuth()
-
-  useEffect(() => {
-    setIsAuthenticated(status)
-  }, [status])
+  const { data: session, status } = useSession()
 
   const closeModal = () => {
     setIsModalOpen(false)
@@ -48,24 +43,13 @@ const SignInProfile = forwardRef((props, ref) => {
     toggleMenu: () => setNavOpen(!isNavOpen),
   }))
 
-  const signOut = async () => {
-    const response = await fetch(
-      `/api/users/signOut`, { method: "GET" }
-    )
-    const data = await response.json()
-
-    if (data.status === 200)
-      window.location.reload()
-
-  }
-
   return (
     <>
       {isModalOpen && <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        <SignIn closeModal={closeModal} isRegister={isRegister} setIsRegister={setIsRegister} isAuthenticated={isAuthenticated} />
-        <Register closeModal={closeModal} isRegister={isRegister} setIsRegister={setIsRegister} isAuthenticated={isAuthenticated} />
+        <SignIn closeModal={closeModal} isRegister={isRegister} setIsRegister={setIsRegister} />
+        <Register closeModal={closeModal} isRegister={isRegister} setIsRegister={setIsRegister} />
       </Modal>}
-      {isAuthenticated ?
+      {session &&
         <>
           <BiUserCircle
             className='text-gray-900 dark:text-gray-100 text-2xl hover:scale-125 transition-all hidden md:block'
@@ -98,7 +82,8 @@ const SignInProfile = forwardRef((props, ref) => {
             </div>
           }
         </>
-       : (
+      }
+      {!session && status === 'unauthenticated' &&
         <>
           <button
             className="font-medium text-gray-900 dark:text-gray-100 bg-green-600 p-2 rounded 
@@ -108,7 +93,8 @@ const SignInProfile = forwardRef((props, ref) => {
             Sign In
           </button>
         </>
-      )}
+      }
+      {!session && status === 'loading' && <LoadingIcon />}
     </>
   )
 })
@@ -116,18 +102,3 @@ const SignInProfile = forwardRef((props, ref) => {
 SignInProfile.displayName = 'SignInProfile'
 
 export default SignInProfile
-
-// export async function getServerSideProps(context) {
-//   console.log('signinprofile',context)
-//   const response = await fetch(
-//     `/api/users/checkAuthenticated`, { method: "GET" }
-//   )
-//   const data = await response.json()
-//   const props = { isAuthenticated: false }
-//   if (data.status === 200)
-//     props.isAuthenticated = true
-
-//   return {
-//     props: props,
-//   }
-// }

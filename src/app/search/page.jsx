@@ -2,18 +2,12 @@
 
 import { BsFillArrowRightCircleFill } from 'react-icons/bs'
 import ContentLock from '@/components/ContentLock'
-import useAuth from '@/lib/useAuth'
 
-import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 
 const Search = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-  const { status } = useAuth()
-
-  useEffect(() => {
-    setIsAuthenticated(status)
-  }, [status])
+  
+  const { data: session } = useSession()
 
   return (
     <>
@@ -33,7 +27,7 @@ const Search = () => {
           </form>
         </div>
       </div>
-      {isAuthenticated ?
+      {session ?
         <></>
         :
         <ContentLock />

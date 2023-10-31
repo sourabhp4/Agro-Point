@@ -1,23 +1,25 @@
 'use client'
 
+import Loading from "@/components/Loading"
 import NotFound from "@/components/NotFound"
-import useAuth from '@/lib/useAuth'
+import { useSession } from "next-auth/react"
 
 import Link from "next/link"
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { AiFillCloseCircle } from "react-icons/ai"
 
 const AddProduct = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [userData, setUserData] = useState(null)
+  const [userData, setUserData] = useState({ isAdmin: false })
 
-  const { status, user } = useAuth()
+  const { data: session, status } = useSession()
 
   useEffect(() => {
-    setIsAuthenticated(status)
-    setUserData(user)
-  }, [status, user])
+    if (session?.user) {
+      const { id, email, isAdmin } = session.user
+      setUserData({ isAdmin: isAdmin, email: email, id: id })
+    }
+  }, [session])
 
   const [productInfo, setProductInfo] = useState({
     title: '',
@@ -77,7 +79,7 @@ const AddProduct = () => {
 
   return (
     <>
-      {isAuthenticated && userData.isAdmin ?
+      {session && userData.isAdmin &&
         <div className='flex flex-col items-center'>
           <div className="space-y-2 pb-8 pt-6">
             <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-white dark:text-gray-900 text-center">
@@ -113,8 +115,8 @@ const AddProduct = () => {
                   >
                     Category
                   </label>
-                  <select 
-                    id="category" 
+                  <select
+                    id="category"
                     className="w-full md:w-1/2 p-2 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:ring-blue-500 focus:border-blue-500 block"
                     onChange={({ target }) => {
                       setProductInfo({ ...productInfo, category: target.value })
@@ -286,7 +288,9 @@ const AddProduct = () => {
             </div>
           </div>
         </div>
-        :
+      }
+      { !session && status === 'loading' && <Loading /> }
+      { (!session && status === 'unauthenticated') || (session && !userData.isAdmin) &&
         <NotFound />
       }
     </>

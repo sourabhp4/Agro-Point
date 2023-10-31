@@ -17,8 +17,8 @@ const SignInButton =  (props) => {
   return (
     <div className='w-max'>
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
-          <SignIn closeModal={closeModal} isRegister={isRegister} setIsRegister={setIsRegister} isAuthenticated={false} />
-          <Register closeModal={closeModal} isRegister={isRegister} setIsRegister={setIsRegister} isAuthenticated={false} />
+          <SignIn closeModal={closeModal} isRegister={isRegister} setIsRegister={setIsRegister} />
+          <Register closeModal={closeModal} isRegister={isRegister} setIsRegister={setIsRegister} />
       </Modal>
       <button
         className="md:block font-medium text-white dark:text-gray-900 bg-primary-500 dark:bg-white p-2 rounded hover:scale-110 transition-all"
