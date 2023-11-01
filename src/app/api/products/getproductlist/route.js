@@ -5,15 +5,13 @@ import User from "@/models/userModel"
 import Product from "@/models/productModel"
 
 import { NextResponse } from "next/server"
-import { headers } from 'next/headers'
 
 connect()
 
 export async function GET(request) {
     try {
-        const headersList = headers()
-        const userId = headersList.get('userId')
         
+        const userId = request.nextUrl.searchParams.get("userId") || ""
         const category = request.nextUrl.searchParams.get("category") || ""
         const currentPageNo = parseInt(request.nextUrl.searchParams.get("pageNo")) || 1
 
@@ -55,6 +53,6 @@ export async function GET(request) {
 
     } catch (error) {
         console.log('Get Product List: ', error.message)
-        return NextResponse.json({ error: 'Something went wrong... Try again after some time' + error.message, status: 500 })
+        return NextResponse.json({ error: 'Something went wrong... Try again after some time', status: 500 })
     }
 }

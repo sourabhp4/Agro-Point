@@ -38,11 +38,10 @@ const CategorySpecific = (props) => {
   const fetchData = async (id) => {
     try {
       const response = await fetch(
-        `/api/products/getproductlist?category=${category || ''}&pageNo=${currentPageNo}`,
+        `/api/products/getproductlist?userId=${id}&category=${category || ''}&pageNo=${currentPageNo}`,
         {
           method: "GET",
           headers: {
-            'userId': id,
             'Accept': "application/json",
             'Content-Type': "application/json",
           },
