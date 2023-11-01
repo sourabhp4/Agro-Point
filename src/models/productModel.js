@@ -19,9 +19,9 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide a description"],
     },
-    releaseDate: {
+    company: {
         type: String,
-        required: [true, "Please provide a releaseDate"],
+        required: [true, "Please provide a company name"],
     },
     image: {
         type: String,

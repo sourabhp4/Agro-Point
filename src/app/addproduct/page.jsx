@@ -25,7 +25,7 @@ const AddProduct = () => {
     title: '',
     category: '',
     description: '',
-    releaseDate: '',
+    company: '',
     image: '',
     currentTag: '',
     tags: [],
@@ -40,7 +40,7 @@ const AddProduct = () => {
     e.preventDefault()
 
     try {
-      if (productInfo.title === '' || productInfo.category === '' || productInfo.description === '' || productInfo.releaseDate === '' || productInfo.image === '' || productInfo.details === '') {
+      if (productInfo.title === '' || productInfo.category === '' || productInfo.description === '' || productInfo.company === '' || productInfo.image === '' || productInfo.details === '') {
         setUserError({ message: 'Complete all fields', isError: true })
         return
       }
@@ -75,7 +75,7 @@ const AddProduct = () => {
           title: '',
           category: '',
           description: '',
-          releaseDate: '',
+          company: '',
           image: '',
           currentTag: '',
           tags: [],
@@ -114,7 +114,7 @@ const AddProduct = () => {
               Add the PRODUCT here...
             </h1>
           </div>
-          <div className="flex flex-col w-[90vw] items-center bg-background-100 dark:bg-gray-900 rounded-xl shadow-md">
+          <div className="flex flex-col w-[90vw] items-center bg-background-100 dark:bg-gray-800 rounded-xl shadow-md">
             <div className="w-full px-4 md:px-12">
               <form className="mt-6" onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -185,19 +185,19 @@ const AddProduct = () => {
 
                 <div className="mb-4">
                   <label
-                    htmlFor="releaseDate"
+                    htmlFor="company"
                     className="block text-sm font-semibold text-gray-800 dark:text-gray-200"
                   >
-                    Release Date
+                    Company Name
                   </label>
                   <input
-                    id="releaseDate"
-                    type="date"
-                    value={productInfo.releaseDate}
-                    className="block w-full sm:w-fit px-4 py-2 mt-2 text-gray-900 border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    id="company"
+                    type="text"
+                    value={productInfo.company}
+                    className="block w-full md:w-3/4 px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     autoComplete='true'
                     onChange={({ target }) => {
-                      setProductInfo({ ...productInfo, releaseDate: target.value })
+                      setProductInfo({ ...productInfo, company: target.value })
                       setUserError({ message: '', isError: true })
                     }}
                   />
@@ -236,7 +236,7 @@ const AddProduct = () => {
                     <div className="w-40 h-40 mb-4 bg-white flex items-center justify-center"><b className="text-red-600">Image Not Found</b></div>
                   }
                   {!productInfo.image &&
-                    <div className="w-40 h-40 mb-4 bg-white flex items-center justify-center"><b>Image Preview</b></div>
+                    <div className="w-40 h-40 mb-4 text-black bg-white flex items-center justify-center"><b>Image Preview</b></div>
                   }
                 </div>
 
@@ -285,7 +285,7 @@ const AddProduct = () => {
 
                 {tagError &&
                   <div>
-                    <p className='bg-red-500 text-white text-xs w-fit mx-auto p-2 rounded-2xl transition-all'>{tagError}</p>
+                    <p className='text-red-500 w-fit mx-auto p-2 rounded-2xl transition-all'>{tagError}</p>
                   </div>
                 }
 
