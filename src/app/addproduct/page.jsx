@@ -26,6 +26,7 @@ const AddProduct = () => {
     category: '',
     description: '',
     company: '',
+    officialLink: '',
     image: '',
     currentTag: '',
     tags: [],
@@ -40,7 +41,7 @@ const AddProduct = () => {
     e.preventDefault()
 
     try {
-      if (productInfo.title === '' || productInfo.category === '' || productInfo.description === '' || productInfo.company === '' || productInfo.image === '' || productInfo.details === '') {
+      if (productInfo.title === '' || productInfo.category === '' || productInfo.description === '' || productInfo.company === '' || productInfo.officialLink === '' || productInfo.image === '' || productInfo.details === '') {
         setUserError({ message: 'Complete all fields', isError: true })
         return
       }
@@ -76,6 +77,7 @@ const AddProduct = () => {
           category: '',
           description: '',
           company: '',
+          officialLink: '',
           image: '',
           currentTag: '',
           tags: [],
@@ -198,6 +200,26 @@ const AddProduct = () => {
                     autoComplete='true'
                     onChange={({ target }) => {
                       setProductInfo({ ...productInfo, company: target.value })
+                      setUserError({ message: '', isError: true })
+                    }}
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label
+                    htmlFor="officialLink"
+                    className="block text-sm font-semibold text-gray-800 dark:text-gray-200"
+                  >
+                    Official Link (Full URL)
+                  </label>
+                  <input
+                    id="officialLink"
+                    type="text"
+                    value={productInfo.officialLink}
+                    className="block w-full md:w-3/4 px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    autoComplete='true'
+                    onChange={({ target }) => {
+                      setProductInfo({ ...productInfo, officialLink: target.value })
                       setUserError({ message: '', isError: true })
                     }}
                   />

@@ -11,9 +11,9 @@ connect()
 export async function POST(request) {
     try {
         const reqBody = await request.json()
-        const { userId, title, category, description, company, image, tags, details } = reqBody
+        const { userId, title, category, description, company, officialLink, image, tags, details } = reqBody
 
-        if ( title === '' || category === '' || description === '' || company === '' || image === '' || details === '' || !tags || tags.length === 0 ) {
+        if ( title === '' || category === '' || description === '' || company === '' || officialLink === '' || image === '' || details === '' || !tags || tags.length === 0 ) {
             return NextResponse.json({ error: 'Insufficient values received at Server', status: 400 })
         }
 
@@ -24,7 +24,7 @@ export async function POST(request) {
         }
 
         const newProduct = new Product({
-            userId, title, category, description, company, image, tags, details
+            userId, title, category, description, company, officialLink, image, tags, details
         })
 
         await newProduct.save()

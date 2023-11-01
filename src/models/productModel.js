@@ -23,6 +23,9 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide a company name"],
     },
+    officialLink: {
+        type: String,
+    },
     image: {
         type: String,
     },
@@ -35,7 +38,7 @@ const productSchema = new mongoose.Schema({
     avgRating: {
         type: Number,
         default: 0.0
-    }
+    },
 })
 
 const Product = mongoose.models.products || mongoose.model("products", productSchema)
