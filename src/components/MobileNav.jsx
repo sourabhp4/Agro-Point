@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import SignInButton from './SignIn/SignInButton'
 
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 
 const MobileNav = () => {
   const [navShow, setNavShow] = useState(false)

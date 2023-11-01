@@ -16,8 +16,8 @@ const AddProduct = () => {
 
   useEffect(() => {
     if (session?.user) {
-      const { id, email, isAdmin } = session.user
-      setUserData({ isAdmin: isAdmin, email: email, id: id })
+      const { id, isAdmin } = session.user
+      setUserData({ isAdmin: isAdmin, id: id })
     }
   }, [session])
 
@@ -26,38 +26,66 @@ const AddProduct = () => {
     category: '',
     description: '',
     releaseDate: '',
-    image: null,
+    image: '',
     currentTag: '',
     tags: [],
     details: '',
   })
 
-  const [userError, setUserError] = useState('')
+  const [userError, setUserError] = useState({ message: '', isError: true })
   const [tagError, setTagError] = useState('')
+  const [isImageError, setIsImageError] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
-      if (productInfo.title === '' || productInfo.category === '' || productInfo.image === '' || productInfo.tagline === '' || productInfo.tags.length === 0 || productInfo.description === '') {
-        setUserError('Complete all fields')
+      if (productInfo.title === '' || productInfo.category === '' || productInfo.description === '' || productInfo.releaseDate === '' || productInfo.image === '' || productInfo.details === '') {
+        setUserError({ message: 'Complete all fields', isError: true })
+        return
+      }
+      if (isImageError) {
+        setUserError({ message: 'Enter valid Image ID', isError: true })
+        return
+      }
+      if (productInfo.tags.length === 0) {
+        setUserError({ message: 'Enter atleast one tag', isError: true })
         return
       }
 
-      window.location.reload()
+      setUserError({ message: 'Your Request is being processed', isError: false })
 
+      const response = await fetch(
+        `/api/products/addproduct`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "Application/json",
+            "Content-Type": "Application/json",
+          },
+          body: JSON.stringify({ ...productInfo, userId: userData.id }),
+        }
+      )
+      const data = await response.json()
+
+      if (data.status !== 200) setUserError({ message: data.error, isError: true })
+      else {
+        setUserError({ message: 'Product Added Successfully', isError: false })
+        setProductInfo({
+          title: '',
+          category: '',
+          description: '',
+          releaseDate: '',
+          image: '',
+          currentTag: '',
+          tags: [],
+          details: '',
+        })
+      }
     } catch (err) {
       console.log(err)
-      setUserError('Something went wrong... Try again')
+      setUserError({ message: 'Something went wrong... Try again', isError: true })
     }
-  }
-
-  const handleImageChange = (event) => {
-    const file = event.target.files[0]
-    if (file)
-      setProductInfo({ ...productInfo, image: file })
-    else
-      setProductInfo({ ...productInfo, image: null })
   }
 
   const removeTag = (tagToRemove) => {
@@ -73,7 +101,7 @@ const AddProduct = () => {
     else if (!productInfo.tags.includes(productInfo.currentTag)) {
       const tags = productInfo.tags
       tags.push(productInfo.currentTag)
-      setProductInfo({ ...productInfo, tag: tags, currentTag: '' })
+      setProductInfo({ ...productInfo, tags: tags, currentTag: '' })
     } else setTagError('Tag already present')
   }
 
@@ -99,11 +127,12 @@ const AddProduct = () => {
                   <input
                     id="title"
                     type="text"
+                    value={productInfo.title}
                     className="block w-full md:w-3/4 px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     autoComplete='true'
                     onChange={({ target }) => {
                       setProductInfo({ ...productInfo, title: target.value })
-                      setUserError('')
+                      setUserError({ message: '', isError: true })
                     }}
                   />
                 </div>
@@ -117,20 +146,20 @@ const AddProduct = () => {
                   </label>
                   <select
                     id="category"
-                    className="w-full md:w-1/2 p-2 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:ring-blue-500 focus:border-blue-500 block"
+                    value={productInfo.category}
+                    className="w-full md:w-1/2 p-2 bg-gray-50 border border-gray-300 text-gray-900 rounded focus:ring-blue-500 focus:border-blue-500"
                     onChange={({ target }) => {
                       setProductInfo({ ...productInfo, category: target.value })
-                      setUserError('')
-                      console.log({ ...productInfo, category: target.value })
+                      setUserError({ message: '', isError: true })
                     }}
                   >
                     <option defaultValue value="">Choose a Category</option>
-                    <option value="FERTILIZERS">FERTILIZERS</option>
-                    <option value="PESTICIDES">PESTICIDES</option>
-                    <option value="TOOLS">TOOLS</option>
-                    <option value="SEEDS">SEEDS</option>
-                    <option value="VEHICLES">VEHICLES</option>
-                    <option value="OTHER">OTHER</option>
+                    <option value="fertilizers">FERTILIZERS</option>
+                    <option value="pesticides">PESTICIDES</option>
+                    <option value="tools">TOOLS</option>
+                    <option value="seeds">SEEDS</option>
+                    <option value="vehicles">VEHICLES</option>
+                    <option value="other">OTHER</option>
                   </select>
                 </div>
 
@@ -144,11 +173,12 @@ const AddProduct = () => {
                   <input
                     id="description"
                     type="text"
+                    value={productInfo.description}
                     className="block w-full px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     autoComplete='true'
                     onChange={({ target }) => {
                       setProductInfo({ ...productInfo, description: target.value })
-                      setUserError('')
+                      setUserError({ message: '', isError: true })
                     }}
                   />
                 </div>
@@ -163,11 +193,12 @@ const AddProduct = () => {
                   <input
                     id="releaseDate"
                     type="date"
+                    value={productInfo.releaseDate}
                     className="block w-full sm:w-fit px-4 py-2 mt-2 text-gray-900 border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     autoComplete='true'
                     onChange={({ target }) => {
                       setProductInfo({ ...productInfo, releaseDate: target.value })
-                      setUserError('')
+                      setUserError({ message: '', isError: true })
                     }}
                   />
                 </div>
@@ -178,22 +209,35 @@ const AddProduct = () => {
                       htmlFor="image"
                       className="block text-sm font-semibold text-gray-800 dark:text-gray-200"
                     >
-                      Image
+                      Image ID from G-DRIVE
                     </label>
                     <input
                       id="image"
-                      type="file"
-                      accept="image/*"
+                      type="text"
+                      value={productInfo.image}
                       className="block w-full sm:w-fit px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                       autoComplete='true'
-                      onChange={handleImageChange}
+                      onChange={({ target }) => {
+                        setProductInfo({ ...productInfo, image: target.value })
+                        setUserError({ message: '', isError: true })
+                        setIsImageError('')
+                      }}
                     />
                   </div>
-                  <img
-                    src={productInfo.image ? URL.createObjectURL(productInfo.image) : ''}
-                    alt='Choose image'
-                    className='w-40 h-40 mb-4'
-                  />
+                  {productInfo.image && !isImageError &&
+                    <img
+                      src={`https://drive.google.com/uc?id=${productInfo.image}`}
+                      alt='Choose image'
+                      className='w-40 h-40 mb-4'
+                      onError={() => setIsImageError(true)}
+                    />
+                  }
+                  {productInfo.image && isImageError &&
+                    <div className="w-40 h-40 mb-4 bg-white flex items-center justify-center"><b className="text-red-600">Image Not Found</b></div>
+                  }
+                  {!productInfo.image &&
+                    <div className="w-40 h-40 mb-4 bg-white flex items-center justify-center"><b>Image Preview</b></div>
+                  }
                 </div>
 
                 <div className="mb-4">
@@ -225,7 +269,7 @@ const AddProduct = () => {
                       value={productInfo.currentTag}
                       onChange={({ target }) => {
                         setProductInfo({ ...productInfo, currentTag: target.value })
-                        setUserError('')
+                        setUserError({ message: '', isError: true })
                         setTagError('')
                       }}
                     />
@@ -255,18 +299,19 @@ const AddProduct = () => {
                   <textarea
                     rows={10}
                     id="details"
+                    value={productInfo.details}
                     className="block w-full px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     autoComplete='true'
                     onChange={({ target }) => {
                       setProductInfo({ ...productInfo, details: target.value })
-                      setUserError('')
+                      setUserError({ message: '', isError: true })
                     }}
                   />
                 </div>
 
-                {userError &&
+                {userError.message &&
                   <div>
-                    <p className='bg-red-500 text-white text-xs w-fit mx-auto p-2 rounded-2xl transition-all'>{userError}</p>
+                    <p className={(userError.isError ? 'text-red-500' : 'text-green-600') + ' w-fit mx-auto p-2 rounded-2xl transition-all'}>{userError.message}</p>
                   </div>
                 }
 
@@ -278,7 +323,7 @@ const AddProduct = () => {
                     CANCEL
                   </Link>
                   <button
-                    className="w-fit px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-primary-800 rounded-md hover:bg-primary-900 focus:outline-none focus:bg-yellow-600"
+                    className="w-fit px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-primary-600 rounded-md hover:bg-primary-900 focus:outline-none focus:bg-primary-900"
                   >
                     SUBMIT
                   </button>
@@ -289,8 +334,8 @@ const AddProduct = () => {
           </div>
         </div>
       }
-      { !session && status === 'loading' && <Loading /> }
-      { (!session && status === 'unauthenticated') || (session && !userData.isAdmin) &&
+      {!session && status === 'loading' && <Loading />}
+      {(!session && status === 'unauthenticated') || (session && !userData.isAdmin) &&
         <NotFound />
       }
     </>
