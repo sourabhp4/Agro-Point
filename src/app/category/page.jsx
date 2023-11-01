@@ -34,8 +34,8 @@ const Category = async () => {
       img: '/images/vehicles.png',
     },
     {
-      title: 'Other',
-      href: 'category/other',
+      title: 'Others',
+      href: 'category/others',
       img: '/images/others.png',
     },
   ]
