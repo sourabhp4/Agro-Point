@@ -8,12 +8,11 @@ import { NextResponse } from "next/server"
 
 connect()
 
-export async function GET(request) {
+export async function POST(request) {
     try {
         
-        const userId = request.nextUrl.searchParams.get("userId") || ""
-        const category = request.nextUrl.searchParams.get("category") || ""
-        const currentPageNo = parseInt(request.nextUrl.searchParams.get("pageNo")) || 1
+        const reqBody = await request.json()
+        const { userId, category, currentPageNo } = reqBody
 
         const user = await User.findById(userId)
 
