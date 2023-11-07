@@ -124,6 +124,14 @@ const ProductSpecific = (props) => {
                   </div>
                 </div>
               </div>
+
+              <div className='border border-gray-500 dark:border-white w-full my-4'></div>
+
+              <div className='px-2 md:px-6'>
+                <h1 className="text-xl leading-5 tracking-tight sm:text-2xl md:text-3xl md:leading-9">
+                  Reviews
+                </h1>
+              </div>
             </div>
           }
         </>
@@ -131,7 +139,7 @@ const ProductSpecific = (props) => {
       {session && !isLoading && error.message &&
         <WentWrong error={error.message} status={error.status} />
       }
-      {((!session && status === 'loading') || (session && isLoading) ) &&
+      {((!session && status === 'loading') || (session && isLoading)) &&
         <Loading />
       }
       {!session && status === 'unauthenticated' &&
