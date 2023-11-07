@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 
 import { connect } from "@/db/dbConfig"
 
@@ -20,6 +21,15 @@ export async function POST(request) {
             return NextResponse.json({ error: "Unauthorised", status: 401 })
         }
 
+        try{
+            new mongoose.Types.ObjectId(productId)
+        }catch(err){
+            return NextResponse.json({
+                error: "Invalid URL",
+                status: 401,
+            })
+        }
+
         const product = await Product.findById(productId, { _id: 0, __v: 0, userId: 0 })
 
         if (product) {
@@ -31,7 +41,7 @@ export async function POST(request) {
             })
         }
         return NextResponse.json({
-            error: "Invalid product Id",
+            error: "Invalid URL",
             status: 401,
         })
 
