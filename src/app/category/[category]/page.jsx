@@ -189,10 +189,10 @@ const CategorySpecific = (props) => {
       {session && !isLoading && error.message &&
         <WentWrong error={error.message} status={error.status} />
       }
-      {isLoading &&
+      {session && isLoading &&
         <Loading />
       }
-      {!session && !isLoading &&
+      {!session &&
         <ContentLock />
       }
     </>
