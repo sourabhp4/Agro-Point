@@ -14,7 +14,7 @@ const ProductSpecific = (props) => {
 
   const productId = props.params?.productId
 
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
 
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState({ message: '', status: '' })
@@ -63,15 +63,15 @@ const ProductSpecific = (props) => {
               {session?.user && session.user.isAdmin &&
                 <div className='flex flex-col md:flex-row justify-center items-center gap-2 md:gap-10 my-4 bg-gray-200 dark:bg-gray-700 py-4 rounded'>
                   <b>Want to modify this product?...</b>
-                  <Link 
-                    className='py-3 px-4 rounded-xl bg-primary-800 dark:bg-primary-600 text-white hover:scale-110 transition-all' 
-                    href='/'
+                  <Link
+                    className='py-3 px-4 rounded-xl bg-primary-800 dark:bg-primary-600 text-white hover:scale-110 transition-all'
+                    href={`/updateproduct/${productId}`}
                   >
                     UPDATE
                   </Link>
-                  <Link 
-                    className='py-3 px-4 rounded-xl bg-red-500 dark:bg-red-500 text-white hover:scale-110 transition-all' 
-                    href='/'
+                  <Link
+                    className='py-3 px-4 rounded-xl bg-red-500 dark:bg-red-500 text-white hover:scale-110 transition-all'
+                    href={`/updateproduct/${productId}`}
                   >
                     DELETE
                   </Link>
@@ -112,6 +112,16 @@ const ProductSpecific = (props) => {
                     <p className='text-primary-900 dark:text-primary-100'>Details:</p>
                     <p>{data.details}</p>
                   </div>
+                  <div>
+                    <a
+                      href={data.officialLink}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='py-2 px-4 bg-primary-500 rounded'
+                    >
+                      VISIT SITE
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -121,10 +131,10 @@ const ProductSpecific = (props) => {
       {session && !isLoading && error.message &&
         <WentWrong error={error.message} status={error.status} />
       }
-      {session && isLoading &&
+      {((!session && status === 'loading') || (session && isLoading) ) &&
         <Loading />
       }
-      {!session &&
+      {!session && status === 'unauthenticated' &&
         <WentWrong error={'Unauthorized'} status={'401'} />
       }
     </>

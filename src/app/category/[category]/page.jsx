@@ -15,7 +15,7 @@ import WentWrong from '@/components/WentWrong'
 const CategorySpecific = (props) => {
   const category = props.params?.category
 
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
 
   const [currentPageNo, setCurrentPageNo] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
@@ -189,10 +189,10 @@ const CategorySpecific = (props) => {
       {session && !isLoading && error.message &&
         <WentWrong error={error.message} status={error.status} />
       }
-      {session && isLoading &&
+      {((!session && status === 'loading') || (session && isLoading) ) &&
         <Loading />
       }
-      {!session &&
+      { (!session && status === 'unauthenticated') &&
         <ContentLock />
       }
     </>
