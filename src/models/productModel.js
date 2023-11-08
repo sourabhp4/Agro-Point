@@ -39,6 +39,18 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0.0
     },
+    avgPerformanceRating: {
+        type: Number,
+        default: 0.0
+    },
+    avgPriceRating: {
+        type: Number,
+        default: 0.0
+    },
+    avgMaintenanceRating: {
+        type: Number,
+        default: 0.0
+    },
 })
 
 const Product = mongoose.models.products || mongoose.model("products", productSchema)

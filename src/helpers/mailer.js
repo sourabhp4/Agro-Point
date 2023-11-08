@@ -22,88 +22,92 @@ export const sendEmail = async ({ email, emailType, userId }) => {
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css"/>
         <style>
-                * {
-                    box-sizing: border-box;
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            a[x-apple-data-detectors] {
+                color: inherit !important;
+                text-decoration: inherit !important;
+            }
+
+            #MessageViewBody a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            p {
+                line-height: inherit
+            }
+
+            .desktop_hide,
+            .desktop_hide table {
+                mso-hide: all;
+                display: none;
+                max-height: 0px;
+                overflow: hidden;
+            }
+
+            .image_block img+div {
+                display: none;
+            }
+
+            @media (max-width:660px) {
+
+                .desktop_hide table.icons-inner,
+                .social_block.desktop_hide .social-table {
+                    display: inline-block !important;
                 }
-        
-                body {
-                    margin: 0;
-                    padding: 0;
+
+                .icons-inner {
+                    text-align: center;
                 }
-        
-                a[x-apple-data-detectors] {
-                    color: inherit !important;
-                    text-decoration: inherit !important;
+
+                .icons-inner td {
+                    margin: 0 auto;
                 }
-        
-                #MessageViewBody a {
-                    color: inherit;
-                    text-decoration: none;
+
+                .mobile_hide {
+                    display: none;
                 }
-        
-                p {
-                    line-height: inherit
+
+                .row-content {
+                    width: 100% !important;
                 }
-        
+
+                .stack .column {
+                    width: 100%;
+                    display: block;
+                }
+
+                .mobile_hide {
+                    min-height: 0;
+                    max-height: 0;
+                    max-width: 0;
+                    overflow: hidden;
+                    font-size: 0px;
+                }
+
                 .desktop_hide,
                 .desktop_hide table {
-                    mso-hide: all;
-                    display: none;
-                    max-height: 0px;
-                    overflow: hidden;
+                    display: table !important;
+                    max-height: none !important;
                 }
-        
-                .image_block img+div {
-                    display: none;
+
+                .row-2 .column-1 .block-1.spacer_block {
+                    height: 35px !important;
                 }
-        
-                @media (max-width:660px) {
-        
-                    .desktop_hide table.icons-inner,
-                    .social_block.desktop_hide .social-table {
-                        display: inline-block !important;
-                    }
-        
-                    .icons-inner {
-                        text-align: center;
-                    }
-        
-                    .icons-inner td {
-                        margin: 0 auto;
-                    }
-        
-                    .mobile_hide {
-                        display: none;
-                    }
-        
-                    .row-content {
-                        width: 100% !important;
-                    }
-        
-                    .stack .column {
-                        width: 100%;
-                        display: block;
-                    }
-        
-                    .mobile_hide {
-                        min-height: 0;
-                        max-height: 0;
-                        max-width: 0;
-                        overflow: hidden;
-                        font-size: 0px;
-                    }
-        
-                    .desktop_hide,
-                    .desktop_hide table {
-                        display: table !important;
-                        max-height: none !important;
-                    }
-        
-                    .row-2 .column-1 .block-1.spacer_block {
-                        height: 35px !important;
-                    }
+
+                .row-1 .column-2 .block-1.heading_block h1 {
+                    text-align: center !important;
                 }
-            </style>
+            }
+        </style>
         </head>
         <body style="background-color: #f3fcf6; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
         <table border="0" cellpadding="0" cellspacing="0" class="nl-container" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f3fcf6;" width="100%">
@@ -117,13 +121,20 @@ export const sendEmail = async ({ email, emailType, userId }) => {
         <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #61ba7a; color: #000; width: 640px; margin: 0 auto;" width="640">
         <tbody>
         <tr>
-        <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
-        <div class="spacer_block block-1" style="height:25px;line-height:25px;font-size:1px;"> </div>
-        <div class="spacer_block block-2" style="height:20px;line-height:20px;font-size:1px;"> </div>
-        <table border="0" cellpadding="0" cellspacing="0" class="image_block block-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+        <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: middle; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="25%">
+        <table border="0" cellpadding="25" cellspacing="0" class="image_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tr>
         <td class="pad">
-        <h1 style="margin: 0; color: #080808; direction: ltr; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; font-size: 38px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder">AGRI-REVIEW-HUB</span></h1>
+        <div align="center" class="alignment" style="line-height:10px"><a href="https://agro-point.vercel.app" target="_blank"><img src="https://agro-point.vercel.app/images/agro_logo1.png" style="display: block; height: auto; border: 0; max-width: 110px; width: 100%;" width="110"/></a></div>
+        </td>
+        </tr>
+        </table>
+        </td>
+        <td class="column column-2" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: middle; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="75%">
+        <table border="0" cellpadding="10" cellspacing="0" class="heading_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+        <tr>
+        <td class="pad">
+        <h1 style="margin: 0; color: #080808; direction: ltr; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; font-size: 38px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: left; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder">AGRI-REVIEW-HUB</span></h1>
         </td>
         </tr>
         </table>
@@ -261,8 +272,8 @@ export const sendEmail = async ({ email, emailType, userId }) => {
         <div align="center" class="alignment">
         <table border="0" cellpadding="0" cellspacing="0" class="social-table" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block;" width="72px">
         <tr>
-        <td style="padding:0 2px 0 2px;"><a href="nkedin.com/in/sourabh-p-a239a1228/" target="_blank"><img alt="Linkedin" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-dark-gray/linkedin@2x.png" style="display: block; height: auto; border: 0;" title="linkedin" width="32"/></a></td>
-        <td style="padding:0 2px 0 2px;"><a href="mailto:mailto:agropointofficial@gmail.com" target="_blank"><img alt="E-Mail" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-dark-gray/mail@2x.png" style="display: block; height: auto; border: 0;" title="E-Mail" width="32"/></a></td>
+        <td style="padding:0 2px 0 2px;"><a href="https://www.linkedin.com/in/sourabh-p-a239a1228/" target="_blank"><img alt="Linkedin" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-dark-gray/linkedin@2x.png" style="display: block; height: auto; border: 0;" title="linkedin" width="32"/></a></td>
+        <td style="padding:0 2px 0 2px;"><a href="mailto:agropointofficial@gmail.com" target="_blank"><img alt="E-Mail" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-dark-gray/mail@2x.png" style="display: block; height: auto; border: 0;" title="E-Mail" width="32"/></a></td>
         </tr>
         </table>
         </div>
@@ -331,88 +342,92 @@ export const sendEmail = async ({ email, emailType, userId }) => {
             <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
             <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css"/>
             <style>
-                    * {
-                        box-sizing: border-box;
+                * {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                a[x-apple-data-detectors] {
+                    color: inherit !important;
+                    text-decoration: inherit !important;
+                }
+
+                #MessageViewBody a {
+                    color: inherit;
+                    text-decoration: none;
+                }
+
+                p {
+                    line-height: inherit
+                }
+
+                .desktop_hide,
+                .desktop_hide table {
+                    mso-hide: all;
+                    display: none;
+                    max-height: 0px;
+                    overflow: hidden;
+                }
+
+                .image_block img+div {
+                    display: none;
+                }
+
+                @media (max-width:660px) {
+
+                    .desktop_hide table.icons-inner,
+                    .social_block.desktop_hide .social-table {
+                        display: inline-block !important;
                     }
-            
-                    body {
-                        margin: 0;
-                        padding: 0;
+
+                    .icons-inner {
+                        text-align: center;
                     }
-            
-                    a[x-apple-data-detectors] {
-                        color: inherit !important;
-                        text-decoration: inherit !important;
+
+                    .icons-inner td {
+                        margin: 0 auto;
                     }
-            
-                    #MessageViewBody a {
-                        color: inherit;
-                        text-decoration: none;
+
+                    .mobile_hide {
+                        display: none;
                     }
-            
-                    p {
-                        line-height: inherit
+
+                    .row-content {
+                        width: 100% !important;
                     }
-            
+
+                    .stack .column {
+                        width: 100%;
+                        display: block;
+                    }
+
+                    .mobile_hide {
+                        min-height: 0;
+                        max-height: 0;
+                        max-width: 0;
+                        overflow: hidden;
+                        font-size: 0px;
+                    }
+
                     .desktop_hide,
                     .desktop_hide table {
-                        mso-hide: all;
-                        display: none;
-                        max-height: 0px;
-                        overflow: hidden;
+                        display: table !important;
+                        max-height: none !important;
                     }
-            
-                    .image_block img+div {
-                        display: none;
+
+                    .row-2 .column-1 .block-1.spacer_block {
+                        height: 35px !important;
                     }
-            
-                    @media (max-width:660px) {
-            
-                        .desktop_hide table.icons-inner,
-                        .social_block.desktop_hide .social-table {
-                            display: inline-block !important;
-                        }
-            
-                        .icons-inner {
-                            text-align: center;
-                        }
-            
-                        .icons-inner td {
-                            margin: 0 auto;
-                        }
-            
-                        .mobile_hide {
-                            display: none;
-                        }
-            
-                        .row-content {
-                            width: 100% !important;
-                        }
-            
-                        .stack .column {
-                            width: 100%;
-                            display: block;
-                        }
-            
-                        .mobile_hide {
-                            min-height: 0;
-                            max-height: 0;
-                            max-width: 0;
-                            overflow: hidden;
-                            font-size: 0px;
-                        }
-            
-                        .desktop_hide,
-                        .desktop_hide table {
-                            display: table !important;
-                            max-height: none !important;
-                        }
-            
-                        .row-2 .column-1 .block-1.spacer_block {
-                            height: 35px !important;
-                        }
+
+                    .row-1 .column-2 .block-1.heading_block h1 {
+                        text-align: center !important;
                     }
-                </style>
+                }
+            </style>
             </head>
             <body style="background-color: #f3fcf6; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
             <table border="0" cellpadding="0" cellspacing="0" class="nl-container" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f3fcf6;" width="100%">
@@ -426,13 +441,20 @@ export const sendEmail = async ({ email, emailType, userId }) => {
             <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #61ba7a; color: #000; width: 640px; margin: 0 auto;" width="640">
             <tbody>
             <tr>
-            <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
-            <div class="spacer_block block-1" style="height:25px;line-height:25px;font-size:1px;"> </div>
-            <div class="spacer_block block-2" style="height:20px;line-height:20px;font-size:1px;"> </div>
-            <table border="0" cellpadding="0" cellspacing="0" class="image_block block-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+            <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: middle; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="25%">
+            <table border="0" cellpadding="25" cellspacing="0" class="image_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
             <tr>
             <td class="pad">
-            <h1 style="margin: 0; color: #080808; direction: ltr; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; font-size: 38px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder">AGRI-REVIEW-HUB</span></h1>
+            <div align="center" class="alignment" style="line-height:10px"><a href="https://agro-point.vercel.app" target="_blank"><img src="https://agro-point.vercel.app/images/agro_logo1.png" style="display: block; height: auto; border: 0; max-width: 110px; width: 100%;" width="110"/></a></div>
+            </td>
+            </tr>
+            </table>
+            </td>
+            <td class="column column-2" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: middle; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="75%">
+            <table border="0" cellpadding="10" cellspacing="0" class="heading_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+            <tr>
+            <td class="pad">
+            <h1 style="margin: 0; color: #080808; direction: ltr; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; font-size: 38px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: left; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder">AGRI-REVIEW-HUB</span></h1>
             </td>
             </tr>
             </table>
@@ -566,8 +588,8 @@ export const sendEmail = async ({ email, emailType, userId }) => {
             <div align="center" class="alignment">
             <table border="0" cellpadding="0" cellspacing="0" class="social-table" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block;" width="72px">
             <tr>
-            <td style="padding:0 2px 0 2px;"><a href="nkedin.com/in/sourabh-p-a239a1228/" target="_blank"><img alt="Linkedin" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-dark-gray/linkedin@2x.png" style="display: block; height: auto; border: 0;" title="linkedin" width="32"/></a></td>
-            <td style="padding:0 2px 0 2px;"><a href="mailto:mailto:agropointofficial@gmail.com" target="_blank"><img alt="E-Mail" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-dark-gray/mail@2x.png" style="display: block; height: auto; border: 0;" title="E-Mail" width="32"/></a></td>
+            <td style="padding:0 2px 0 2px;"><a href="https://www.linkedin.com/in/sourabh-p-a239a1228/" target="_blank"><img alt="Linkedin" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-dark-gray/linkedin@2x.png" style="display: block; height: auto; border: 0;" title="linkedin" width="32"/></a></td>
+            <td style="padding:0 2px 0 2px;"><a href="mailto:agropointofficial@gmail.com" target="_blank"><img alt="E-Mail" height="32" src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/circle-dark-gray/mail@2x.png" style="display: block; height: auto; border: 0;" title="E-Mail" width="32"/></a></td>
             </tr>
             </table>
             </div>

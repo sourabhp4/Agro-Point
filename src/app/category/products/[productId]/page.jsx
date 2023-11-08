@@ -9,6 +9,7 @@ import { AiFillStar } from 'react-icons/ai'
 import Loading from '@/components/Loading'
 import WentWrong from '@/components/WentWrong'
 import Link from 'next/link'
+import UserReview from '@/components/UserReview'
 
 const ProductSpecific = (props) => {
 
@@ -19,6 +20,40 @@ const ProductSpecific = (props) => {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState({ message: '', status: '' })
   const [data, setData] = useState(null)
+  const [reviewData, setReviewData] = useState({
+    userReview: {
+      username: 'hello',
+      date: '21-09-2023',
+      isModified: true,
+      avgRating: 1,
+      performanceRating: 1,
+      priceRating: 1,
+      maintenanceRating: 1,
+      comment: 'hello world',
+    },
+    reviews: [
+      {
+        username: 'world',
+        date: '21-09-2023',
+        isModified: true,
+        avgRating: 1,
+        performanceRating: 1,
+        priceRating: 1,
+        maintenanceRating: 1,
+        comment: 'hello world',
+      },
+      {
+        username: 'hello',
+        date: '21-09-2023',
+        isModified: false,
+        avgRating: 1,
+        performanceRating: 1,
+        priceRating: 1,
+        maintenanceRating: 1,
+        comment: 'hello world',
+      },
+    ]
+  })
 
   useEffect(() => {
     if (session?.user) {
@@ -127,10 +162,43 @@ const ProductSpecific = (props) => {
               <div className='border border-gray-500 dark:border-white w-full my-4'></div>
 
               <div className='px-2 md:px-6'>
-                <h1 className="text-xl leading-5 tracking-tight sm:text-2xl md:text-3xl md:leading-9">
-                  Reviews
+                <h1 className="text-xl leading-5 tracking-tight sm:text-2xl md:text-3xl md:leading-9 ">
+                  Average Ratings
                 </h1>
               </div>
+
+              <div className='flex flex-col sm:flex-row items-center justify-center gap-4 mt-4'>
+                <div className='flex flex-col items-center'>
+                  <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{data.avgPerformanceRating} / 5</p>
+                  <p>Performance</p>
+                </div>
+                <div className='flex flex-col items-center'>
+                  <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{data.avgPriceRating} / 5</p>
+                  <p>Price</p>
+                </div>
+                <div className='flex flex-col items-center'>
+                  <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{data.avgMaintenanceRating} / 5</p>
+                  <p>Maintenance</p>
+                </div>
+              </div>
+
+              <div className='text-center mt-3'>
+                <p>{data.totalRatings || 0} reviews on this product till now</p>
+              </div>
+
+              <div className='border border-gray-500 dark:border-white w-full my-4'></div>
+
+              {reviewData &&
+                <>
+                  <div className='px-2 md:px-6'>
+                    <h1 className="text-xl leading-5 tracking-tight sm:text-2xl md:text-3xl md:leading-9 ">
+                      Reviews
+                    </h1>
+                  </div>
+
+                  <UserReview data={reviewData.userReview} user={session.user} />
+                </>
+              }
             </div>
           }
         </>
