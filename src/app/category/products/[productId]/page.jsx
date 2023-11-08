@@ -30,7 +30,7 @@ const ProductSpecific = (props) => {
   const fetchData = async (id) => {
     try {
       const response = await fetch(
-        `/api/products/getproduct`,
+        `/api/products/getproductinfo`,
         {
           method: "POST",
           headers: {
@@ -45,7 +45,6 @@ const ProductSpecific = (props) => {
       if (result.status !== 200) setError({ message: result.error, status: result.status })
       else {
         setData(result.product)
-        console.log(result.product)
       }
       setIsLoading(false)
     } catch (err) {

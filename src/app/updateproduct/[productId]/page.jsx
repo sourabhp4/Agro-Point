@@ -33,7 +33,7 @@ const UpdateProduct = (props) => {
   const fetchData = async (id) => {
     try {
       const response = await fetch(
-        `/api/products/getproduct`,
+        `/api/products/getproductinfo`,
         {
           method: "POST",
           headers: {
