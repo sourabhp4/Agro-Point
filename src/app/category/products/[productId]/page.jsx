@@ -18,47 +18,17 @@ const ProductSpecific = (props) => {
   const { data: session, status } = useSession()
 
   const [isLoading, setIsLoading] = useState(true)
+  const [isReviewLoading, setIsReviewLoading] = useState(true)
+
   const [error, setError] = useState({ message: '', status: '' })
   const [data, setData] = useState(null)
-  const [reviewData, setReviewData] = useState({
-    userReview: {
-      username: 'hello',
-      date: '21-09-2023',
-      isModified: true,
-      avgRating: 1,
-      performanceRating: 1,
-      priceRating: 1,
-      maintenanceRating: 1,
-      comment: 'hello world',
-    },
-    reviews: [
-      {
-        username: 'world',
-        date: '21-09-2023',
-        isModified: true,
-        avgRating: 1,
-        performanceRating: 1,
-        priceRating: 1,
-        maintenanceRating: 1,
-        comment: 'hello world',
-      },
-      {
-        username: 'hello',
-        date: '21-09-2023',
-        isModified: false,
-        avgRating: 1,
-        performanceRating: 1,
-        priceRating: 1,
-        maintenanceRating: 1,
-        comment: 'hello world',
-      },
-    ]
-  })
+  const [reviewData, setReviewData] = useState(null)
 
   useEffect(() => {
     if (session?.user) {
       const { id } = session.user
       fetchData(id)
+      fetchReviews(id)
     }
   }, [session])
 
@@ -82,6 +52,32 @@ const ProductSpecific = (props) => {
         setData(result.product)
       }
       setIsLoading(false)
+    } catch (err) {
+      console.log(err)
+      setError({ message: '', status: '' })
+    }
+  }
+
+  const fetchReviews = async (id) => {
+    try {
+      const response = await fetch(
+        `/api/reviews/getreviews`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "Application/json",
+            "Content-Type": "Application/json",
+          },
+          body: JSON.stringify({ userId: id, productId: productId }),
+        }
+      )
+      const result = await response.json()
+
+      if (result.status !== 200) setError({ message: result.error, status: result.status })
+      else {
+        setReviewData(result.data)
+      }
+      setIsReviewLoading(false)
     } catch (err) {
       console.log(err)
       setError({ message: '', status: '' })
@@ -169,34 +165,76 @@ const ProductSpecific = (props) => {
 
               <div className='flex flex-col sm:flex-row items-center justify-center gap-4 mt-4'>
                 <div className='flex flex-col items-center'>
-                  <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{data.avgPerformanceRating} / 5</p>
+                  <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{data.avgPerformanceRating}</p>
                   <p>Performance</p>
                 </div>
                 <div className='flex flex-col items-center'>
-                  <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{data.avgPriceRating} / 5</p>
+                  <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{data.avgPriceRating}</p>
                   <p>Price</p>
                 </div>
                 <div className='flex flex-col items-center'>
-                  <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{data.avgMaintenanceRating} / 5</p>
+                  <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{data.avgMaintenanceRating}</p>
                   <p>Maintenance</p>
                 </div>
               </div>
 
               <div className='text-center mt-3'>
-                <p>{data.totalRatings || 0} reviews on this product till now</p>
+                <p>{data.reviewCount || 0} reviews on this product till now</p>
               </div>
 
               <div className='border border-gray-500 dark:border-white w-full my-4'></div>
-
-              {reviewData &&
+              
+              <div className='px-2 md:px-6'>
+                <h1 className="text-xl leading-5 tracking-tight sm:text-2xl md:text-3xl md:leading-9 ">
+                  Reviews
+                </h1>
+              </div>
+              {!reviewData && isReviewLoading &&
+                <Loading />
+              }
+              {reviewData && !isReviewLoading &&
                 <>
-                  <div className='px-2 md:px-6'>
-                    <h1 className="text-xl leading-5 tracking-tight sm:text-2xl md:text-3xl md:leading-9 ">
-                      Reviews
-                    </h1>
-                  </div>
+                  <UserReview data={reviewData.userReview} user={session.user} productId={productId} />
 
-                  <UserReview data={reviewData.userReview} user={session.user} />
+                  <ul className='mt-4'>
+                    {reviewData.reviews && reviewData.reviews.map((review) => {
+                      const { _id, username, avgRating, performanceRating, priceRating, maintenanceRating, comment, date, isUpdated } = review
+                      return (
+                        <li key={_id} className='border p-2'>
+                          <div className='mt-3 flex flex-col md:flex-row items-center gap-3'>
+                            <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{avgRating} <AiFillStar /> </p>
+                            <p>
+                              By <b>{username}</b>, On {date}{isUpdated ? ', (Edited)' : ''}
+                            </p>
+                          </div>
+                          <div className='flex flex-col sm:flex-row items-center justify-center gap-4 mt-4'>
+                            <div className='flex flex-col items-center'>
+                              <p className='bg-primary-800 dark:bg-primary-600 text-white w-fit py-1 px-2 flex flex-row items-center gap-2 rounded-xl'>{performanceRating} / 5</p>
+                              <p >Performance</p>
+                            </div>
+                            <div className='flex flex-col items-center'>
+                              <p className='bg-primary-800 dark:bg-primary-600 text-white w-fit py-1 px-2 flex flex-row items-center gap-2 rounded-xl'>{priceRating} / 5</p>
+                              <p >Price</p>
+                            </div>
+                            <div className='flex flex-col items-center'>
+                              <p className='bg-primary-800 dark:bg-primary-600 text-white w-fit py-1 px-2 flex flex-row items-center gap-2 rounded-xl'>{maintenanceRating} / 5</p>
+                              <p >Maintenance</p>
+                            </div>
+                          </div>
+                          {comment &&
+                            <div className='w-full md:w-3/4 mx-auto'>
+                              <h3 className='mt-4'>Comment:</h3>
+                              <div className='mt-2 p-2 w-full'>
+                                <p>{comment}</p>
+                              </div>
+                            </div>
+                          }
+                        </li>
+                      )
+                    })
+
+                    }
+                  </ul>
                 </>
               }
             </div>

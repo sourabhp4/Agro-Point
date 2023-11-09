@@ -1,12 +1,9 @@
 import mongoose from 'mongoose'
-
 import { connect } from "@/db/dbConfig"
-
 import User from "@/models/userModel"
-import Review from "@/models/reviewModel"
-
+import Product from "@/models/productModel"
 import { NextResponse } from "next/server"
-import Product from '@/models/productModel'
+import Review from '@/models/reviewModel'
 
 connect()
 
@@ -36,46 +33,34 @@ export async function POST(request) {
         }
 
         const oldReview = await Review.findOne({ userId, productId })
-        if(oldReview){
-            return NextResponse.json({ error: "Review already present", status: 401 })
-        }
-
+        
         const avgRating = ((performanceRating + priceRating + maintenanceRating) / 3).toFixed(1)
 
-        const newReview = new Review({
-            username: user.username,
-            userId,
-            productId,
-            avgRating: parseFloat(avgRating),
-            performanceRating,
-            priceRating,
-            maintenanceRating,
-            comment: (comment || undefined),
-            date: new Date().toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-            }),
-        })
-
-        await newReview.save()
-
         const product = await Product.findById(productId)
-        product.avgRating += parseFloat(avgRating)
-        product.avgPerformanceRating += performanceRating
-        product.avgPriceRating += priceRating
-        product.avgMaintenanceRating += maintenanceRating
+        product.avgRating += (parseFloat(avgRating) - oldReview.avgRating)
+        product.avgPerformanceRating += (performanceRating - oldReview.performanceRating)
+        product.avgPriceRating += (priceRating - oldReview.priceRating)
+        product.avgMaintenanceRating += (maintenanceRating - oldReview.maintenanceRating)
 
         await product.save()
 
+        oldReview.avgRating = parseFloat(avgRating)
+        oldReview.performanceRating = performanceRating
+        oldReview.priceRating = priceRating
+        oldReview.maintenanceRating = maintenanceRating
+        oldReview.isUpdated = true
+        oldReview.comment = comment
+
+        await oldReview.save()
+
         return NextResponse.json({
-            message: "Success",
+            message: "Product updated successfully",
             success: true,
             status: 200,
         })
 
     } catch (error) {
-        console.log('Add Review: ', error.message)
+        console.log('Update Product: ', error.message)
         return NextResponse.json({ error: 'Something went wrong... Try again after some time', status: 500 })
     }
 }

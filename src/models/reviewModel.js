@@ -40,7 +40,7 @@ const reviewSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide the Date"],
     },
-    isModified: {
+    isUpdated: {
         type: Boolean,
         default: false
     },

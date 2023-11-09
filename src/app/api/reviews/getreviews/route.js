@@ -1,8 +1,8 @@
-
+import mongoose from 'mongoose'
 import { connect } from "@/db/dbConfig"
 
 import User from "@/models/userModel"
-import Product from "@/models/productModel"
+import Review from "@/models/reviewModel"
 
 import { NextResponse } from "next/server"
 
@@ -10,48 +10,37 @@ connect()
 
 export async function POST(request) {
     try {
-        
         const reqBody = await request.json()
-        const { userId, category, currentPageNo } = reqBody
+        const { userId, productId } = reqBody
+
+        try {
+            new mongoose.Types.ObjectId(userId)
+            new mongoose.Types.ObjectId(productId)
+        } catch (err) {
+            return NextResponse.json({
+                error: "Invalid URL",
+                status: 401,
+            })
+        }
 
         const user = await User.findById(userId)
 
         if (!user || (user && !user.isVerified)) {
-            return NextResponse.json({ error: "Unauthorised", status: 401 })
+            return NextResponse.json({ error: "Unauthorized", status: 401 })
         }
-        if (!['fertilizers', 'pesticides', 'tools', 'seeds', 'vehicles', 'others'].includes(category)) {
-            return NextResponse.json({ error: "Category Not Found", status: 400 })
-        }
-
-        const pageLimit = 4
-        const skip = (currentPageNo - 1) * pageLimit
-
-        const totalCount = await Product.countDocuments({ category })
-        const totalPages = Math.ceil(totalCount / pageLimit)
-
-        if (currentPageNo <= 0 || (currentPageNo > totalPages && totalPages != 0) ) {
-            return NextResponse.json({ error: "Invalid Page No.", status: 400 })
-        }
-
-        const products = await Product.find({ category })
-            .select({
-                'title': 1,
-                'image': 1,
-                'tags': 1,
-                'description': 1,
-            })
-            .skip(skip)
-            .limit(pageLimit)
+        
+        const reviews = await Review.find({ userId: { $ne: userId }, productId }, { _id: 1, __v: 0, userId: 0, productId: 0 })
+        const userReview = await Review.findOne({ userId, productId }, { _id: 0, __v: 0, userId: 0, productId: 0 })
 
         return NextResponse.json({
             message: "Success",
             success: true,
             status: 200,
-            products: { list: products, totalPages: totalPages }
+            data: { userReview, reviews }
         })
 
     } catch (error) {
-        console.log('Get Product List: ', error.message)
+        console.log('Get Reviews: ', error.message)
         return NextResponse.json({ error: 'Something went wrong... Try again after some time', status: 500 })
     }
 }
