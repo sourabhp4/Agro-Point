@@ -164,25 +164,28 @@ const Search = () => {
           </form>
         </div>
       </div>
-
+      {isSearchLoading && 
+          <Loading />
+      }
       {searchData &&
         <div className='flex justify-center items-center p-4'>
           <div className='bg-background-100 dark:bg-gray-600 w-full md:w-3/4 lg:w-1/2 rounded border'>
-            {searchData.message &&
+            {searchData.message && !isSearchLoading &&
               <div className='flex items-center justify-center min-h-[15vh]'>
                 <h2 className='text-gray-900 dark:text-gray-400 uppercase md:text-2xl'>{searchData.message}</h2>
               </div>
             }
-            {searchData.list &&
+            {searchData.list && !isSearchLoading &&
               <>
                 <ul>
                   {searchData.list.map((product) => {
                     const { _id, title, description } = product
                     return (
                       <Link
+                        key={_id}
                         href={`category/products/${_id}`}
                       >
-                        <li key={_id} className='p-2' >
+                        <li className='p-2' >
                           <h3 className='uppercase'>{title}</h3>
                           <p className='text-gray-900 dark:text-gray-400'>{description}</p>
                         </li>
