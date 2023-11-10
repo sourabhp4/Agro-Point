@@ -11,6 +11,7 @@ import WentWrong from '@/components/WentWrong'
 import Link from 'next/link'
 import UserReview from '@/components/UserReview'
 import ContentLock from '@/components/ContentLock'
+import RatingSVG from '@/components/RatingSVG'
 
 const ProductSpecific = (props) => {
 
@@ -166,15 +167,15 @@ const ProductSpecific = (props) => {
 
               <div className='flex flex-col sm:flex-row items-center justify-center gap-4 mt-4'>
                 <div className='flex flex-col items-center'>
-                  <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{data.avgPerformanceRating}</p>
+                  <RatingSVG rating={data.avgPerformanceRating} />
                   <p>Performance</p>
                 </div>
                 <div className='flex flex-col items-center'>
-                  <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{data.avgPriceRating}</p>
+                  <RatingSVG rating={data.avgPriceRating} />
                   <p>Price</p>
                 </div>
                 <div className='flex flex-col items-center'>
-                  <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{data.avgMaintenanceRating}</p>
+                  <RatingSVG rating={data.avgMaintenanceRating} />
                   <p>Maintenance</p>
                 </div>
               </div>
