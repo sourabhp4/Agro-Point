@@ -161,8 +161,8 @@ const Profile = () => {
 
   return (
     <>{session &&
-      <div className="flex flex-col md:flex-row justify-center gap-2 md:mx-4">
-        <div className="flex flex-col items-center mx-4 w-full md:w-[30vw]">
+      <div className="flex flex-col md:flex-row justify-center gap-2 md:mx-4 bg-white dark:bg-gray-900 p-3 rounded-xl">
+        <div className="flex flex-col items-center mx-4 w-full md:w-[30vw] sm:mt-4">
           {session.user && session.user.image ?
             <Image
               src={session.user.image}
@@ -182,8 +182,8 @@ const Profile = () => {
               className="h-48 w-48 rounded-full"
             />
           }
-          <h3 className="pb-2 pt-4 text-2xl font-bold leading-8 text-center text-yellow-700">
-            Hey <b className='text-yellow-600'>{user.username} </b>... 👋🏼
+          <h3 className="pb-2 pt-4 text-2xl font-bold leading-8 text-center text-primary-800 dark:text-primary-300">
+            Hey <b className='text-primary-600 dark:text-primary-200'>{user.username} </b>... 👋🏼
           </h3>
           <div className="text-black dark:text-white">Welcome to your <b>PROFILE</b></div>
         </div>
@@ -194,7 +194,7 @@ const Profile = () => {
                 <h2 className='font-bold text-black'>Want to Add Product... ?</h2>
                 <Link
                   href='/addproduct'
-                  className='flex gap-2 items-center text-lg bg-primary-900 p-2 rounded text-white dark:text-black hover:scale-105 transition-all'
+                  className='flex gap-2 items-center text-lg bg-primary-900 p-2 rounded text-white hover:scale-105 transition-all'
                 >
                   <BsFillPlusCircleFill />CLICK HERE
                 </Link>
