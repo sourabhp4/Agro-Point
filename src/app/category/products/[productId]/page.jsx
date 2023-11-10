@@ -12,7 +12,6 @@ import SectionContainer from '@/components/SectionContainer'
 import Link from 'next/link'
 import UserReview from '@/components/UserReview'
 import ContentLock from '@/components/ContentLock'
-import RatingSVG from '@/components/RatingSVG'
 
 const ProductSpecific = (props) => {
 
@@ -167,16 +166,16 @@ const ProductSpecific = (props) => {
               </div>
 
               <div className='flex flex-col sm:flex-row items-center justify-center gap-4 mt-4'>
-                <div className='flex flex-col items-center'>
-                  <RatingSVG rating={data.avgPerformanceRating} />
+                <div className='flex flex-col items-center gap-2'>
+                  <p className='p-4 border-4 rounded-full border-green-500'>{data.performanceRating || 'Not Rated'}</p>
                   <p>Performance</p>
                 </div>
-                <div className='flex flex-col items-center'>
-                  <RatingSVG rating={data.avgPriceRating} />
+                <div className='flex flex-col items-center gap-2'>
+                  <p className='p-4 border-4 rounded-full border-green-500'>{data.performanceRating || 'Not Rated'}</p>
                   <p>Price</p>
                 </div>
-                <div className='flex flex-col items-center'>
-                  <RatingSVG rating={data.avgMaintenanceRating} />
+                <div className='flex flex-col items-center gap-2'>
+                  <p className='p-4 border-4 rounded-full border-green-500'>{data.performanceRating || 'Not Rated'}</p>
                   <p>Maintenance</p>
                 </div>
               </div>
@@ -197,9 +196,13 @@ const ProductSpecific = (props) => {
                   {!reviewData && isReviewLoading &&
                     <Loading />
                   }
-                  {reviewData && !isReviewLoading &&
+                  {reviewData && !isReviewLoading && 
                     <>
                       <UserReview data={reviewData.userReview} user={session.user} productId={productId} />
+
+                      {!reviewData.userReview && reviewData.reviews?.length === 0 && 
+                        <h2 className='text-2xl text-center uppercase mt-2'>No Other Reviews Yet</h2>
+                      }
 
                       <ul className='mt-4'>
                         {reviewData.reviews && reviewData.reviews.map((review) => {
