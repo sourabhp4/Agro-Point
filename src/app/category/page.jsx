@@ -5,6 +5,8 @@ import Image from 'next/image'
 
 import { AiOutlineDoubleRight } from 'react-icons/ai'
 
+import SectionContainer from '@/components/SectionContainer'
+
 const Category = async () => {
 
   const categories = [
@@ -41,7 +43,7 @@ const Category = async () => {
   ]
 
   return (
-    <>
+    <SectionContainer>
       <div>
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-center text-white">
@@ -71,7 +73,7 @@ const Category = async () => {
           })}
         </div>
       </div>
-    </>
+    </SectionContainer>
   )
 }
 

@@ -10,6 +10,7 @@ import Image from 'next/image'
 
 import Loading from '@/components/Loading'
 import WentWrong from '@/components/WentWrong'
+import SectionContainer from '@/components/SectionContainer'
 
 const Search = () => {
 
@@ -122,7 +123,7 @@ const Search = () => {
   }
 
   return (
-    <>
+    <SectionContainer>
       <div className="flex justify-center items-center my-4">
         <div className="container mx-auto bg-gray-200 dark:bg-gray-900 rounded-lg p-4 shadow-lg">
           <form onSubmit={(e) => {
@@ -296,7 +297,7 @@ const Search = () => {
           }
         </>
       }
-    </>
+    </SectionContainer>
   )
 }
 

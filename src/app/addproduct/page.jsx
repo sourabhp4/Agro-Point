@@ -2,6 +2,7 @@
 
 import Loading from "@/components/Loading"
 import NotFound from "@/components/NotFound"
+import SectionContainer from "@/components/SectionContainer"
 import { useSession } from "next-auth/react"
 
 import Link from "next/link"
@@ -108,7 +109,7 @@ const AddProduct = () => {
   }
 
   return (
-    <>
+    <SectionContainer>
       {session && userData.isAdmin &&
         <div className='flex flex-col items-center'>
           <div className="space-y-2 pb-8 pt-6">
@@ -360,7 +361,7 @@ const AddProduct = () => {
       {(!session && status === 'unauthenticated') || (session && !userData.isAdmin) &&
         <NotFound />
       }
-    </>
+    </SectionContainer>
   )
 }
 

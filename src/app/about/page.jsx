@@ -2,12 +2,12 @@ import React from 'react'
 
 import Image from 'next/image'
 
-import { BiLogoGmail, BiLogoGithub, BiLogoLinkedinSquare }
-  from 'react-icons/bi'
+import { BiLogoGmail, BiLogoGithub, BiLogoLinkedinSquare } from 'react-icons/bi'
+import SectionContainer from '@/components/SectionContainer'
 
 const About = () => {
   return (
-    <>
+    <SectionContainer>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 text-center text-white">
@@ -52,7 +52,7 @@ const About = () => {
               <b className='text-primary-800 dark:text-primary-200'>Our Mission</b>
               <p>
                 Collaborate with like-minded individuals, exchange ideas, and
-                develop groundbreaking projects that will shape the future of
+                gather knowledge that will shape the future of
                 technology.
               </p>
               <b className='text-primary-800 dark:text-primary-200'>Expert Insights:</b>
@@ -73,7 +73,7 @@ const About = () => {
           </div>
         </div>
       </div>
-    </>
+    </SectionContainer>
   )
 }
 

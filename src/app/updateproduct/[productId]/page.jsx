@@ -3,6 +3,7 @@
 import Loading from "@/components/Loading"
 import NotFound from "@/components/NotFound"
 import WentWrong from '@/components/WentWrong'
+import SectionContainer from '@/components/SectionContainer'
 
 import { useSession } from "next-auth/react"
 
@@ -159,7 +160,7 @@ const UpdateProduct = (props) => {
   }
 
   return (
-    <>
+    <SectionContainer>
       {( ( !session && status === 'loading' ) || isLoading ) && <Loading />}
       {(!session && status === 'unauthenticated') &&
         <NotFound />
@@ -426,7 +427,7 @@ const UpdateProduct = (props) => {
           </div>
         </div>
       }
-    </>
+    </SectionContainer>
   )
 }
 

@@ -1,6 +1,8 @@
 'use client'
 
 import NotFound from "@/components/NotFound"
+import SectionContainer from '@/components/SectionContainer'
+
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 
@@ -117,7 +119,7 @@ const VerifyEmail = () => {
 	}
 
 	return (
-		<>
+		<SectionContainer>
 			{token ?
 				<>
 					{!isError && isLoading && !isCompleted &&
@@ -255,7 +257,7 @@ const VerifyEmail = () => {
 				:
 				<NotFound />
 			}
-		</>
+		</SectionContainer>
 	)
 }
 

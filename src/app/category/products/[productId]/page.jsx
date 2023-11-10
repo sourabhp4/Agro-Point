@@ -8,6 +8,7 @@ import { AiFillStar } from 'react-icons/ai'
 
 import Loading from '@/components/Loading'
 import WentWrong from '@/components/WentWrong'
+import SectionContainer from '@/components/SectionContainer'
 import Link from 'next/link'
 import UserReview from '@/components/UserReview'
 import ContentLock from '@/components/ContentLock'
@@ -87,7 +88,7 @@ const ProductSpecific = (props) => {
   }
 
   return (
-    <>
+    <SectionContainer>
       {!isLoading && !error.message &&
         <>
           {data &&
@@ -256,7 +257,7 @@ const ProductSpecific = (props) => {
       {isLoading &&
         <Loading />
       }
-    </>
+    </SectionContainer>
   )
 }
 

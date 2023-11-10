@@ -30,10 +30,15 @@ export default function RootLayout({ children }) {
       className={`${space_grotesk.variable} scroll-smooth`}
       suppressHydrationWarning
     >
-      <meta name="msapplication-TileColor" content="#000000" />
-      <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
-      <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
-      <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+      <head>
+        <meta name="msapplication-TileColor" content="#000000" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
+        <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
+      </head>
 
       <body className="bg-white text-black antialiased dark:bg-gray-950 dark:text-white" suppressHydrationWarning={true}>
         <NextTopLoader
@@ -46,7 +51,7 @@ export default function RootLayout({ children }) {
               <div className="h-screen font-sans flex flex-col justify-between">
                 <div className='h-[60vh] w-full absolute top-0 bg-gradient-to-r from-primary-600 to-primary-500 dark:from-primary-900 dark:to-primary-600 -z-50'></div>
                 <Header />
-                <main className="mt-24 mb-auto">{children}</main>
+                <main className="mb-auto">{children}</main>
                 <Footer />
               </div>
             </section>
