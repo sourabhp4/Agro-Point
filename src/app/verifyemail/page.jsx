@@ -1,9 +1,10 @@
 'use client'
 
 import NotFound from "@/components/NotFound"
-import SignInButton from "@/components/SignIn/SignInButton"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
+
+import Link from "next/link"
 
 const VerifyEmail = () => {
 
@@ -23,12 +24,12 @@ const VerifyEmail = () => {
             Accept: "Application/json",
             "Content-Type": "Application/json",
           },
-          body: JSON.stringify({token}),
+          body: JSON.stringify({ token }),
         }
       )
       const data = await response.json()
 
-      if(data.status !== 200)
+      if (data.status !== 200)
         setIsError(true)
       else
         setIsLoading(false)
@@ -38,7 +39,7 @@ const VerifyEmail = () => {
   }
 
   useState(() => {
-      verifyUserEmail()
+    verifyUserEmail()
   })
 
   return (
@@ -67,7 +68,7 @@ const VerifyEmail = () => {
                 Thank you for the verification...😊👍
               </p>
               <div className="mt-4">
-                <SignInButton buttonText={'Click to SIGNIN'} />
+                <Link href={'/'} className="px-8 py-3 w-fit font-semibold rounded bg-green-600 text-gray-900">{'Back to homepage'}</Link>
               </div>
             </div>
           }
@@ -86,7 +87,7 @@ const VerifyEmail = () => {
                 There may be a chance that you may have already been verified (If URL string is proper).
               </p>
               <div className="mt-4">
-                <SignInButton buttonText={'Click to SIGNIN'} />
+                <Link href={'/'} className="px-8 py-3 w-fit font-semibold rounded bg-green-600 text-gray-900">{'Back to homepage'}</Link>
               </div>
             </div>
           }

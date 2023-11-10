@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 
 import { connect } from "@/db/dbConfig"
 
-import User from "@/models/userModel"
 import Product from "@/models/productModel"
 
 import { NextResponse } from "next/server"
@@ -14,13 +13,7 @@ export async function POST(request) {
     try {
 
         const reqBody = await request.json()
-        const { userId, productId } = reqBody
-
-        const user = await User.findById(userId)
-
-        if (!user || (user && !user.isVerified)) {
-            return NextResponse.json({ error: "Unauthorised", status: 401 })
-        }
+        const { productId } = reqBody
 
         try{
             new mongoose.Types.ObjectId(productId)

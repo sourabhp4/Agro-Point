@@ -10,12 +10,13 @@ import Loading from '@/components/Loading'
 import WentWrong from '@/components/WentWrong'
 import Link from 'next/link'
 import UserReview from '@/components/UserReview'
+import ContentLock from '@/components/ContentLock'
 
 const ProductSpecific = (props) => {
 
   const productId = props.params?.productId
 
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
 
   const [isLoading, setIsLoading] = useState(true)
   const [isReviewLoading, setIsReviewLoading] = useState(true)
@@ -25,14 +26,14 @@ const ProductSpecific = (props) => {
   const [reviewData, setReviewData] = useState(null)
 
   useEffect(() => {
+    fetchData()
     if (session?.user) {
       const { id } = session.user
-      fetchData(id)
       fetchReviews(id)
     }
   }, [session])
 
-  const fetchData = async (id) => {
+  const fetchData = async () => {
     try {
       const response = await fetch(
         `/api/products/getproductinfo`,
@@ -42,7 +43,7 @@ const ProductSpecific = (props) => {
             Accept: "Application/json",
             "Content-Type": "Application/json",
           },
-          body: JSON.stringify({ userId: id, productId: productId }),
+          body: JSON.stringify({ productId: productId }),
         }
       )
       const result = await response.json()
@@ -86,10 +87,10 @@ const ProductSpecific = (props) => {
 
   return (
     <>
-      {session && !isLoading && !error.message &&
+      {!isLoading && !error.message &&
         <>
           {data &&
-            <div className='bg-background-100 dark:bg-gray-800 mx-4 md:mx-12 rounded p-2'>
+            <div className='bg-background-100 dark:bg-gray-800 mx-4 md:mx-12 rounded p-2 shadow-lg'>
               {session?.user && session.user.isAdmin &&
                 <div className='flex flex-col md:flex-row justify-center items-center gap-2 md:gap-10 my-4 bg-gray-200 dark:bg-gray-700 py-4 rounded'>
                   <b>Want to modify this product?...</b>
@@ -183,58 +184,65 @@ const ProductSpecific = (props) => {
               </div>
 
               <div className='border border-gray-500 dark:border-white w-full my-4'></div>
-              
+
               <div className='px-2 md:px-6'>
                 <h1 className="text-xl leading-5 tracking-tight sm:text-2xl md:text-3xl md:leading-9 ">
                   Reviews
                 </h1>
               </div>
-              {!reviewData && isReviewLoading &&
-                <Loading />
-              }
-              {reviewData && !isReviewLoading &&
+              {session ?
                 <>
-                  <UserReview data={reviewData.userReview} user={session.user} productId={productId} />
+                  {!reviewData && isReviewLoading &&
+                    <Loading />
+                  }
+                  {reviewData && !isReviewLoading &&
+                    <>
+                      <UserReview data={reviewData.userReview} user={session.user} productId={productId} />
 
-                  <ul className='mt-4'>
-                    {reviewData.reviews && reviewData.reviews.map((review) => {
-                      const { _id, username, avgRating, performanceRating, priceRating, maintenanceRating, comment, date, isUpdated } = review
-                      return (
-                        <li key={_id} className='border p-2'>
-                          <div className='mt-3 flex flex-col md:flex-row items-center gap-3'>
-                            <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{avgRating} <AiFillStar /> </p>
-                            <p>
-                              By <b>{username}</b>, On {date}{isUpdated ? ', (Edited)' : ''}
-                            </p>
-                          </div>
-                          <div className='flex flex-col sm:flex-row items-center justify-center gap-4 mt-4'>
-                            <div className='flex flex-col items-center'>
-                              <p className='bg-primary-800 dark:bg-primary-600 text-white w-fit py-1 px-2 flex flex-row items-center gap-2 rounded-xl'>{performanceRating} / 5</p>
-                              <p >Performance</p>
-                            </div>
-                            <div className='flex flex-col items-center'>
-                              <p className='bg-primary-800 dark:bg-primary-600 text-white w-fit py-1 px-2 flex flex-row items-center gap-2 rounded-xl'>{priceRating} / 5</p>
-                              <p >Price</p>
-                            </div>
-                            <div className='flex flex-col items-center'>
-                              <p className='bg-primary-800 dark:bg-primary-600 text-white w-fit py-1 px-2 flex flex-row items-center gap-2 rounded-xl'>{maintenanceRating} / 5</p>
-                              <p >Maintenance</p>
-                            </div>
-                          </div>
-                          {comment &&
-                            <div className='w-full md:w-3/4 mx-auto'>
-                              <h3 className='mt-4'>Comment:</h3>
-                              <div className='mt-2 p-2 w-full'>
-                                <p>{comment}</p>
+                      <ul className='mt-4'>
+                        {reviewData.reviews && reviewData.reviews.map((review) => {
+                          const { _id, username, avgRating, performanceRating, priceRating, maintenanceRating, comment, date, isUpdated } = review
+                          return (
+                            <li key={_id} className='border p-2'>
+                              <div className='mt-3 flex flex-col md:flex-row items-center gap-3'>
+                                <p className='bg-primary-800 dark:bg-primary-600 w-fit py-1 px-2 text-white flex flex-row items-center gap-2 rounded-xl'>{avgRating} <AiFillStar /> </p>
+                                <p>
+                                  By <b>{username}</b>, On {date}{isUpdated ? ', (Edited)' : ''}
+                                </p>
                               </div>
-                            </div>
-                          }
-                        </li>
-                      )
-                    })
-
-                    }
-                  </ul>
+                              <div className='flex flex-col sm:flex-row items-center justify-center gap-4 mt-4'>
+                                <div className='flex flex-col items-center'>
+                                  <p className='bg-primary-800 dark:bg-primary-600 text-white w-fit py-1 px-2 flex flex-row items-center gap-2 rounded-xl'>{performanceRating} / 5</p>
+                                  <p >Performance</p>
+                                </div>
+                                <div className='flex flex-col items-center'>
+                                  <p className='bg-primary-800 dark:bg-primary-600 text-white w-fit py-1 px-2 flex flex-row items-center gap-2 rounded-xl'>{priceRating} / 5</p>
+                                  <p >Price</p>
+                                </div>
+                                <div className='flex flex-col items-center'>
+                                  <p className='bg-primary-800 dark:bg-primary-600 text-white w-fit py-1 px-2 flex flex-row items-center gap-2 rounded-xl'>{maintenanceRating} / 5</p>
+                                  <p >Maintenance</p>
+                                </div>
+                              </div>
+                              {comment &&
+                                <div className='w-full md:w-3/4 mx-auto'>
+                                  <h3 className='mt-4'>Comment:</h3>
+                                  <div className='mt-2 p-2 w-full'>
+                                    <p>{comment}</p>
+                                  </div>
+                                </div>
+                              }
+                            </li>
+                          )
+                        })
+                        }
+                      </ul>
+                    </>
+                  }
+                </>
+                :
+                <>
+                  <ContentLock />
                 </>
               }
             </div>
@@ -244,11 +252,8 @@ const ProductSpecific = (props) => {
       {session && !isLoading && error.message &&
         <WentWrong error={error.message} status={error.status} />
       }
-      {((!session && status === 'loading') || (session && isLoading)) &&
+      {isLoading &&
         <Loading />
-      }
-      {!session && status === 'unauthenticated' &&
-        <WentWrong error={'Unauthorized'} status={'401'} />
       }
     </>
   )

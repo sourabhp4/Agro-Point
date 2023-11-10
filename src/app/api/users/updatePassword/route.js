@@ -22,6 +22,9 @@ export async function POST(request) {
         if (!user.isVerified) {
             return NextResponse.json({ error: "Account verification pending. If emailed token have become invalid, Please Register again", status: 400 })
         }
+        if (!user.password) {
+            return NextResponse.json({ error: "Password not set for account, Please click forgot password to set it... :)", status: 400 })
+        }
 
         const validPassword = await bcryptjs.compare(password, user.password)
         if (!validPassword) {

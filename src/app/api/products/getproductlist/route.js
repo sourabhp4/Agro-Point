@@ -1,7 +1,6 @@
 
 import { connect } from "@/db/dbConfig"
 
-import User from "@/models/userModel"
 import Product from "@/models/productModel"
 
 import { NextResponse } from "next/server"
@@ -12,13 +11,8 @@ export async function POST(request) {
     try {
         
         const reqBody = await request.json()
-        const { userId, category, currentPageNo } = reqBody
+        const { category, currentPageNo } = reqBody
 
-        const user = await User.findById(userId)
-
-        if (!user || (user && !user.isVerified)) {
-            return NextResponse.json({ error: "Unauthorised", status: 401 })
-        }
         if (!['fertilizers', 'pesticides', 'tools', 'seeds', 'vehicles', 'others'].includes(category)) {
             return NextResponse.json({ error: "Category Not Found", status: 400 })
         }

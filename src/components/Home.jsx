@@ -4,9 +4,6 @@ export default function Home() {
   return (
     <>
       <div className="h-[90vh] flex flex-col sm:flex-row justify-center p-4 sm:gap-x-44">
-        <div className="">
-          Hello
-        </div>
         <div className="bg-black dark:bg-white rounded-3xl">
           <Image 
             src="/images/agro.png"

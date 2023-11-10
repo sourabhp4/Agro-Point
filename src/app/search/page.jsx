@@ -4,18 +4,14 @@ import { BsFillArrowRightCircleFill } from 'react-icons/bs'
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 import { BiArrowToLeft, BiArrowToRight } from 'react-icons/bi'
 
-import { useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import ContentLock from '@/components/ContentLock'
 import Loading from '@/components/Loading'
 import WentWrong from '@/components/WentWrong'
 
 const Search = () => {
-
-  const { data: session, status } = useSession()
 
   const [currentPageNo, setCurrentPageNo] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
@@ -32,13 +28,10 @@ const Search = () => {
   const highDecrement = 5
 
   useEffect(() => {
-    if (session?.user) {
-      const { id } = session.user
-      fetchData(id)
-    }
+    fetchData()
   }, [currentPageNo])
 
-  const fetchData = async (id) => {
+  const fetchData = async () => {
     if (searchString === '')
       return
 
@@ -52,7 +45,7 @@ const Search = () => {
             Accept: "Application/json",
             "Content-Type": "Application/json",
           },
-          body: JSON.stringify({ userId: id, currentPageNo: currentPageNo, searchString }),
+          body: JSON.stringify({ currentPageNo: currentPageNo, searchString }),
         }
       )
       const result = await response.json()
@@ -87,24 +80,17 @@ const Search = () => {
   }
 
   const handleSubmit = () => {
-    const { id } = session.user
     setCurrentPageNo(1)
     setSearchData(null)
-    fetchData(id)
+    fetchData()
   }
 
   useEffect(() => {
     setData(null)
-    if (searchString === '') {
-      setSearchData(null)
-    }
-    if (session?.user) {
-      const { id } = session.user
-      fetchDescription(id)
-    }
+    fetchDescription()
   }, [searchString])
 
-  const fetchDescription = async (id) => {
+  const fetchDescription = async () => {
     if (searchString === '')
       return
 
@@ -118,7 +104,7 @@ const Search = () => {
             Accept: "Application/json",
             "Content-Type": "Application/json",
           },
-          body: JSON.stringify({ userId: id, searchString }),
+          body: JSON.stringify({ searchString }),
         }
       )
       const result = await response.json()
@@ -138,7 +124,7 @@ const Search = () => {
   return (
     <>
       <div className="flex justify-center items-center my-4">
-        <div className="container mx-auto bg-gray-200 dark:bg-gray-900 rounded-lg p-4">
+        <div className="container mx-auto bg-gray-200 dark:bg-gray-900 rounded-lg p-4 shadow-lg">
           <form onSubmit={(e) => {
             e.preventDefault()
             handleSubmit(e)
@@ -147,7 +133,7 @@ const Search = () => {
 
             <div className="flex items-center bg-white rounded-lg overflow-hidden px-3 py-2 justify-between w-full md:w-3/4 mx-auto">
               <input
-                className="text-xl text-gray-600 bg-white outline-none w-3/4"
+                className="text-xl text-black bg-white outline-none w-3/4"
                 type="text"
                 placeholder="Search ..."
                 value={searchString}
@@ -169,7 +155,7 @@ const Search = () => {
       }
       {searchData && !isSearchLoading &&
         <div className='flex justify-center items-center p-4'>
-          <div className='bg-background-100 dark:bg-gray-600 w-full md:w-3/4 lg:w-1/2 rounded'>
+          <div className='bg-background-100 dark:bg-gray-900 w-full md:w-3/4 lg:w-1/2 rounded'>
             {searchData.message &&
               <div className='flex items-center justify-center min-h-[15vh]'>
                 <h2 className='text-gray-900 dark:text-gray-400 uppercase md:text-2xl'>{searchData.message}</h2>
@@ -207,16 +193,13 @@ const Search = () => {
         </div>
       }
 
-      {session && !isLoading && error.message &&
+      {!isLoading && error.message &&
         <WentWrong error={error.message} status={error.status} />
       }
-      {((!session && status === 'loading') || (session && isLoading)) &&
+      {isLoading &&
         <Loading />
       }
-      {(!session && status === 'unauthenticated') &&
-        <ContentLock />
-      }
-      {session && !isLoading && !error.message &&
+      {!isLoading && !error.message &&
         <>
           {data && data.list && data.list.length !== 0 &&
             <>

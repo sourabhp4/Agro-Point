@@ -40,18 +40,18 @@ const Profile = () => {
     }
   }, [session])
 
-  const [userNameMessage, setUserNameMessage] = useState({ message: '', complete: false})
-  const [userPassMessage, setUserPassMessage] = useState({ message: '', complete: false})
+  const [userNameMessage, setUserNameMessage] = useState({ message: '', complete: false })
+  const [userPassMessage, setUserPassMessage] = useState({ message: '', complete: false })
 
   const handleSubmitUsername = async (e) => {
     e.preventDefault()
     try {
       if (userInfo.email === '' || userInfo.password === '') {
-        setUserNameMessage({ message: 'Complete all fields', complete: false})
+        setUserNameMessage({ message: 'Complete all fields', complete: false })
         return
       }
       if (userInfo.username === user.username) {
-        setUserNameMessage({ message: 'No change found in the username', complete: false})
+        setUserNameMessage({ message: 'No change found in the username', complete: false })
         return
       }
 
@@ -68,10 +68,10 @@ const Profile = () => {
       )
       const data = await response.json()
 
-      if (data.status !== 200) setUserNameMessage({ message: data.error, complete: false})
+      if (data.status !== 200) setUserNameMessage({ message: data.error, complete: false })
       else {
-        setUserNameMessage({ message: 'Username Updated Successfully', complete: true})
-        setUser({ ...user, username: userInfo.username})
+        setUserNameMessage({ message: 'Username Updated Successfully', complete: true })
+        setUser({ ...user, username: userInfo.username })
         setUserInfo({
           ...userInfo,
           password: ''
@@ -80,7 +80,7 @@ const Profile = () => {
 
     } catch (err) {
       console.log(err)
-      setUserNameMessage({ message: 'Something went wrong... Try again', complete: false})
+      setUserNameMessage({ message: 'Something went wrong... Try again', complete: false })
     }
   }
 
@@ -88,32 +88,32 @@ const Profile = () => {
     e.preventDefault()
     try {
       if (userInfo.email === '' || userInfo.newPassword === '') {
-        setUserPassMessage({ message: 'Complete all fields', complete: false})
+        setUserPassMessage({ message: 'Complete all fields', complete: false })
         return
       }
       console.log('hello')
       if (userInfo.newPassword.length < 8) {
-        setUserPassMessage({ message: 'Length of the Password must atleast be 8 characters', complete: false})
+        setUserPassMessage({ message: 'Length of the Password must atleast be 8 characters', complete: false })
         return
       }
 
       if (!/[a-z]/.test(userInfo.newPassword)) {
-        setUserPassMessage({ message: 'Password must contain at least one lowercase letter', complete: false})
+        setUserPassMessage({ message: 'Password must contain at least one lowercase letter', complete: false })
         return
       }
 
       if (!/[A-Z]/.test(userInfo.newPassword)) {
-        setUserPassMessage({ message: 'Password must contain at least one uppercase letter', complete: false})
+        setUserPassMessage({ message: 'Password must contain at least one uppercase letter', complete: false })
         return
       }
 
       if (!/[!@#$%^&*]/.test(userInfo.newPassword)) {
-        setUserPassMessage({ message: 'Password must contain at least one special symbol (!@#$%^&*)', complete: false})
+        setUserPassMessage({ message: 'Password must contain at least one special symbol (!@#$%^&*)', complete: false })
         return
       }
 
       if (userInfo.newPassword !== userInfo.newRePassword) {
-        setUserPassMessage({ message: 'Both passwords should match', complete: false})
+        setUserPassMessage({ message: 'Both passwords should match', complete: false })
         return
       }
 
@@ -130,7 +130,7 @@ const Profile = () => {
       )
       const data = await response.json()
 
-      if (data.status !== 200) setUserPassMessage({ message: data.error, complete: false})
+      if (data.status !== 200) setUserPassMessage({ message: data.error, complete: false })
       else {
         setUserInfo({
           ...userInfo,
@@ -138,12 +138,12 @@ const Profile = () => {
           newPassword: '',
           newRePassword: '',
         })
-        setUserPassMessage({ message: 'Change of Password Successful', complete: true})
+        setUserPassMessage({ message: 'Change of Password Successful', complete: true })
       }
 
     } catch (err) {
       console.log(err)
-      setUserPassMessage({ message: 'Something went wrong... Try again', complete: false})
+      setUserPassMessage({ message: 'Something went wrong... Try again', complete: false })
     }
   }
 
@@ -163,14 +163,25 @@ const Profile = () => {
     <>{session &&
       <div className="flex flex-col md:flex-row justify-center gap-2 md:mx-4">
         <div className="flex flex-col items-center mx-4 w-full md:w-[30vw]">
-          <Image
-            src='/images/farmer.png'
-            alt="avatar"
-            priority={false}
-            width={200}
-            height={200}
-            className="h-48 w-48 rounded-full"
-          />
+          {session.user && session.user.image ?
+            <Image
+              src={session.user.image}
+              alt="profile"
+              priority={false}
+              width={200}
+              height={200}
+              className="h-48 w-48 rounded-full"
+            />
+            :
+            <Image
+              src='/images/farmer.png'
+              alt="avatar"
+              priority={false}
+              width={200}
+              height={200}
+              className="h-48 w-48 rounded-full"
+            />
+          }
           <h3 className="pb-2 pt-4 text-2xl font-bold leading-8 text-center text-yellow-700">
             Hey <b className='text-yellow-600'>{user.username} </b>... 👋🏼
           </h3>
@@ -224,7 +235,7 @@ const Profile = () => {
                   value={userInfo.username || ''}
                   onChange={({ target }) => {
                     setUserInfo({ ...userInfo, username: target.value })
-                    setUserNameMessage({ message: '', complete: false})
+                    setUserNameMessage({ message: '', complete: false })
                   }}
                 />
               </div>
@@ -244,7 +255,7 @@ const Profile = () => {
                     className='w-full mr-1 focus:outline-none bg-white'
                     onChange={({ target }) => {
                       setUserInfo({ ...userInfo, password: target.value })
-                      setUserNameMessage({ message: '', complete: false})
+                      setUserNameMessage({ message: '', complete: false })
                     }}
                   />
                   <label
@@ -269,7 +280,7 @@ const Profile = () => {
 
               {userNameMessage.message &&
                 <div>
-                  <p className={( userNameMessage.complete ? 'text-green-600' : 'text-red-500' ) + ' text-sm w-fit mx-auto p-2 rounded-2xl transition-all'}>{userNameMessage.message}</p>
+                  <p className={(userNameMessage.complete ? 'text-green-600' : 'text-red-500') + ' text-sm w-fit mx-auto p-2 rounded-2xl transition-all'}>{userNameMessage.message}</p>
                 </div>
               }
 
@@ -305,7 +316,7 @@ const Profile = () => {
                       value={userInfo.oldPassword || ''}
                       onChange={({ target }) => {
                         setUserInfo({ ...userInfo, oldPassword: target.value })
-                        setUserPassMessage({ message: '', complete: false})
+                        setUserPassMessage({ message: '', complete: false })
                       }}
                     />
                     <label
@@ -344,7 +355,7 @@ const Profile = () => {
                     className='w-full mr-1 focus:outline-none bg-white'
                     onChange={({ target }) => {
                       setUserInfo({ ...userInfo, newPassword: target.value })
-                      setUserPassMessage({ message: '', complete: false})
+                      setUserPassMessage({ message: '', complete: false })
                     }}
                   />
                   <label
@@ -376,14 +387,14 @@ const Profile = () => {
                   value={userInfo.newRePassword || ''}
                   onChange={({ target }) => {
                     setUserInfo({ ...userInfo, newRePassword: target.value })
-                    setUserPassMessage({ message: '', complete: false})
+                    setUserPassMessage({ message: '', complete: false })
                   }}
                 />
               </div>
 
               {userPassMessage.message &&
                 <div>
-                  <p className={( userPassMessage.complete ? 'text-green-600' : 'text-red-500' ) + ' text-sm w-fit mx-auto p-2 rounded-2xl transition-all' }>{userPassMessage.message}</p>
+                  <p className={(userPassMessage.complete ? 'text-green-600' : 'text-red-500') + ' text-sm w-fit mx-auto p-2 rounded-2xl transition-all'}>{userPassMessage.message}</p>
                 </div>
               }
 
@@ -399,8 +410,8 @@ const Profile = () => {
         </div>
       </div>
     }
-    {!session && status === 'unauthenticated' &&  <ContentLock />}
-    {!session && status === 'loading' &&  <Loading />}
+      {!session && status === 'unauthenticated' && <ContentLock />}
+      {!session && status === 'loading' && <Loading />}
     </>
   )
 }

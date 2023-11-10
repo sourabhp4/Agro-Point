@@ -1,7 +1,6 @@
 
 import { connect } from "@/db/dbConfig"
 
-import User from "@/models/userModel"
 import Product from "@/models/productModel"
 
 import { NextResponse } from "next/server"
@@ -12,13 +11,7 @@ export async function POST(request) {
     try {
 
         const reqBody = await request.json()
-        const { userId, currentPageNo, searchString } = reqBody
-
-        const user = await User.findById(userId)
-
-        if (!user || (user && !user.isVerified)) {
-            return NextResponse.json({ error: "Unauthorised", status: 401 })
-        }
+        const { currentPageNo, searchString } = reqBody
 
         const pageLimit = 4
         const skip = (currentPageNo - 1) * pageLimit

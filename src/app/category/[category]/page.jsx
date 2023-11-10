@@ -6,16 +6,12 @@ import { BiArrowToLeft, BiArrowToRight } from 'react-icons/bi'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import ContentLock from '@/components/ContentLock'
 
-import { useSession } from 'next-auth/react'
 import Loading from '@/components/Loading'
 import WentWrong from '@/components/WentWrong'
 
 const CategorySpecific = (props) => {
   const category = props.params?.category
-
-  const { data: session, status } = useSession()
 
   const [currentPageNo, setCurrentPageNo] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
@@ -29,13 +25,10 @@ const CategorySpecific = (props) => {
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    if (session?.user) {
-      const { id } = session.user
-      fetchData(id)
-    }
-  }, [currentPageNo, session])
+    fetchData()
+  }, [currentPageNo])
 
-  const fetchData = async (id) => {
+  const fetchData = async () => {
     try {
       const response = await fetch(
         `/api/products/getproductlist`,
@@ -45,7 +38,7 @@ const CategorySpecific = (props) => {
             Accept: "Application/json",
             "Content-Type": "Application/json",
           },
-          body: JSON.stringify({ userId: id, category: category || '', currentPageNo: currentPageNo }),
+          body: JSON.stringify({ category: category || '', currentPageNo: currentPageNo }),
         }
       )
       const result = await response.json()
@@ -87,7 +80,7 @@ const CategorySpecific = (props) => {
         </h1>
       </div>
 
-      {session && !isLoading && !error.message &&
+      {!isLoading && !error.message &&
         <>
           {data && data.list && data.list.length === 0 ?
             <div className='bg-white dark:bg-gray-900 dark:text-primary-200 w-fit mx-auto mb-6 rounded-xl p-4'>
@@ -124,7 +117,7 @@ const CategorySpecific = (props) => {
                 {data.list.map((product) => {
                   const { _id, title, image, tags, description } = product
                   return (
-                    <li key={_id} className="w-[90vw] md:w-[80vw] mx-auto p-4 my-4 flex flex-col md:flex-row justify-center items-center md:gap-14 lg:gap-24 border-2 rounded-3xl hover:scale-105 transition-all duration-300 bg-gray-100 dark:bg-gray-800">
+                    <li key={_id} className="w-[90vw] md:w-[80vw] mx-auto p-4 my-4 flex flex-col md:flex-row justify-center items-center md:gap-14 lg:gap-24 border-2 rounded-3xl hover:scale-105 transition-all duration-300 bg-gray-100 dark:bg-gray-800  shadow-lg">
                       <Image
                         alt={title}
                         src={`https://drive.google.com/uc?id=${image}`}
@@ -186,14 +179,11 @@ const CategorySpecific = (props) => {
 
         </>
       }
-      {session && !isLoading && error.message &&
+      {!isLoading && error.message &&
         <WentWrong error={error.message} status={error.status} />
       }
-      {((!session && status === 'loading') || (session && isLoading) ) &&
+      {isLoading &&
         <Loading />
-      }
-      { (!session && status === 'unauthenticated') &&
-        <ContentLock />
       }
     </>
   )

@@ -14,7 +14,7 @@ const About = () => {
             &quot; WHERE QUALITY MEETS THE SOIL, AND EVERY PRODUCT TELLS A STORY. &quot;
           </h1>
         </div>
-        <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0 bg-background-100 dark:bg-gray-900 mx-4 rounded-xl py-4">
+        <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0 bg-background-100 dark:bg-gray-900 mx-4 rounded-xl py-4 shadow-lg">
           <div className="flex flex-col items-center space-2 pt-10">
             <div>
               <Image
