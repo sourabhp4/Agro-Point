@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
       </head>
 
-      <body className="bg-white text-black antialiased dark:bg-gray-950 dark:text-white" suppressHydrationWarning={true}>
+      <body className="bg-white text-black antialiased dark:bg-gray-950 dark:text-white scroll-smooth scrollbar-thin scrollbar-thumb-primary-100 scrollbar-track-gray-200 dark:scrollbar-track-gray-800" suppressHydrationWarning={true}>
         <NextTopLoader
           color="#FFFFFF"
           options={{ showSpinner: false }}

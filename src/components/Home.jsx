@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <div>
-        <section className="w-full h-[70vh] sm:h-[80vh] md:h-[100vh] bg-[url('/images/bg8.jpg')] bg-no-repeat bg-cover ">
+        <section className="w-full h-[100vh] bg-[url('/images/bg8.jpg')] bg-no-repeat bg-cover ">
           <div className="flex flex-col gap-8 w-full sm:w-3/4 md:3/5 lg:1/2 h-full items-center justify-center mx-auto text-white">
             <h2 className="uppercase font-san text-base md:text-xl text-center font-bold">Welcome to Agri Review Hub</h2>
             <h1 className="font-lobster text-5xl sm:text-6xl md:text-7xl text-center">Agriculture & Reviews</h1>

@@ -9,6 +9,9 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx}'
   ],
+  plugins: [
+    require('tailwind-scrollbar')
+  ],
   darkMode: 'class',
   theme: {
     screens: {

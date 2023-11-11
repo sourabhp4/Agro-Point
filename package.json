@@ -24,7 +24,8 @@
     "react-dom": "^18",
     "react-easy-swipe": "^0.0.23",
     "react-hot-toast": "^2.4.1",
-    "react-icons": "^4.11.0"
+    "react-icons": "^4.11.0",
+    "tailwind-scrollbar": "^3.0.5"
   },
   "devDependencies": {
     "@types/react": "18.2.29",
