@@ -1,7 +1,7 @@
 
 # AGRIREVIEWHUB 🌱
 
-## [LIVE DEMO ➡️]((https://agro-point.vercel.app/))
+## [LIVE DEMO ➡️](https://agro-point.vercel.app/)
 
 AgriReviewHub is a sophisticated web application 😀 meticulously crafted with NextJS, Tailwind CSS, and MongoDB technologies. Designed to empower the agricultural community, it offers a seamless platform for users to explore, review, and share insights on various agricultural products 👍. The inclusion of secure authentication methods, including email, password, and Google authentication, ensures a reliable and user-friendly experience. With an intuitive interface, the admin can effortlessly manage product additions, while users engage in informed discussions, contributing to a dynamic hub of agricultural product reviews 😎.
 
